@@ -6,11 +6,12 @@ import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
+import { HomeComponent } from './views/home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -70,7 +71,19 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/pages/pages.module').then((m) => m.PagesModule)
       },
+      {
+        path: 'views',
+        loadChildren: () =>
+          import('./views/views.module').then((m) => m.ViewsModule)
+      },
     ]
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    data: {
+      title: 'Home'
+    }
   },
   {
     path: '404',
