@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule  } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 
-import { CardModule, GridModule, NavModule, UtilitiesModule, TabsModule } from '@coreui/angular';
+import { CardModule, BadgeModule, GridModule, NavModule, UtilitiesModule, TabsModule, ButtonModule, ModalModule, FormModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 
 import { ViewsRoutingModule } from './views-routing.module';
@@ -18,6 +19,10 @@ import { SpendingsComponent } from './spendings/spendings.component';
     SpendingsComponent
   ],
   imports: [
+    BadgeModule,
+    FormModule,
+    ModalModule,
+    ButtonModule,
     CommonModule,
     ViewsRoutingModule,
     CardModule,
