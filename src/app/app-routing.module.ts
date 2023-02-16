@@ -11,7 +11,7 @@ import { HomeComponent } from './views/home/home.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'views/home',
     pathMatch: 'full'
   },
   {
