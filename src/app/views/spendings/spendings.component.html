@@ -8,7 +8,7 @@
   </c-card-header>
   <c-card-body>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button [cModalToggle]="verticallyCenteredModal.id" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
+      <button (click)="newSpending();toggleLiveDemo();" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
     </div>
 <table class="table table-striped table-hover table-responsive">
   <thead>
@@ -22,52 +22,15 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr>
+    <tr *ngFor="let spending of spendings">
       <th scope="row">1</th>
-      <td>Cerveja</td>
-      <td>30/02/2023</td>
-      <td>Cerveja</td>
-      <td>R$ 17,50</td>
+      <td>{{spending.name}}</td>
+      <td>{{spending.date}}</td>
+      <td>{{spending.idCategory}}</td>
+      <td>{{spending.value}}</td>
       <td>
-        <a routerLink="./">
-          <svg cIcon class="me-2" name="cilPencil"></svg>
-        </a>
-        <a routerLink="./">
-          <svg cIcon class="me-2" name="cilTrash"></svg>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Agua</td>
-      <td>01/02/2023</td>
-      <td>Manun. Casa</td>
-      <td>R$ 57,50</td>
-      <td>
-        <a routerLink="./">
-          <svg cIcon class="me-2" name="cilPencil"></svg>
-        </a>
-        <a routerLink="./">
-          <svg cIcon class="me-2" name="cilTrash"></svg>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="1">Seguro</td>
-      <td>05/02/2023</td>
-      <td>Transporte</td>
-      <td>R$ 187,90</td>
-      <td>
-        <a routerLink="./">
-          <svg cIcon name="cilPencil" size="lg"></svg>
-        </a>
-        <a routerLink="./">
-          <svg cIcon name="cilTrash" size="lg"></svg>
-        </a>
-        <a routerLink="./" >
-          <svg cIcon name="cilBell" size="lg"></svg>
-        </a>
+        <button style="margin-right: 10px;" (click)="editSpending(spending.id)" cButton color="info"><svg cIcon name="cilPencil" cTextColor="white" size="lg"></svg></button>
+        <button (click)="toggleModalDelete(spending.id)" cButton color="danger"><svg cIcon name="cilTrash" cTextColor="white" size="lg"></svg></button>
       </td>
     </tr>
   </tbody>
@@ -78,7 +41,7 @@
 </c-col>
 </c-row>
 
-<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal">
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal" [visible]="visibleModalForm" (visibleChange)="handleLiveDemoChange($event)">
   <c-modal-header>
     <h5 cModalTitle>Insert Spending</h5>
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
@@ -92,26 +55,50 @@
       <c-col [md]="6">
         <label cLabel for="inputCategory4">Category</label>
         <select aria-label="Default select example" cSelect id="inputCategory4" formControlName="idCategory">
-          <option>Categories</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value="">Select a category</option>
+          <option *ngFor="let cat of categories" value="{{cat.id}}">{{cat.name}}</option>
         </select>
       </c-col>
       <c-col [md]="6">
         <label cLabel for="inputDate4">Date</label>
-        <input cFormControl id="inputDate4" formControlName="date"/>
+        <div class="input-group">
+          <input
+            cFormControl
+            formControlName="date"
+            class="form-control"
+            placeholder="dd/mm/yyyy"
+            name="dp"
+            [(ngModel)]="model"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"><svg cIcon name="cilCalendar" size="lg"></svg></button>
+        </div>
       </c-col>
       <c-col [md]="6">
         <label cLabel for="inputValue4">Value</label>
-        <input cFormControl id="inputValue4" formControlName="value"/>
+        <input appTwoDigitDecimaNumber cFormControl type="number" id="inputValue4" formControlName="value"/>
       </c-col>
+
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button [cModalToggle]="verticallyCenteredModal.id" cButton type="submit">Save</button>
-        <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
-          Cancel
-        </button>
+        <button (click)="toggleLiveDemo()" cButton type="submit">Save</button>
+        <button (click)="toggleLiveDemo()" cButton color="secondary">Cancel</button>
       </div>
     </form>
+
+  </c-modal-body>
+</c-modal>
+
+<c-modal #deleteModal alignment="center" id="deleteModal" [visible]="visibleModalDelete" (visibleChange)="handleModalDelete($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Delete Spending</h5>
+    <button [cModalToggle]="deleteModal.id" cButtonClose></button>
+  </c-modal-header>
+    <p>Are your shure to delete item?&hellip;</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button (click)="deleteSpending();toggleModalDelete('')" cButton >Yes</button>
+      <button (click)="toggleModalDelete('')" cButton color="secondary">No</button>
+    </div>
+  <c-modal-body>
   </c-modal-body>
 </c-modal>

@@ -3,6 +3,7 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@a
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import {TwoDigitDecimaNumberDirective} from './views/spendings/TwoDigitDecimaNumberDirective'
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -46,6 +47,7 @@ import {
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { ViewsModule } from './views/views.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -86,7 +88,8 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    ViewsModule
+    ViewsModule,
+    NgbModule
   ],
   providers: [
     {
@@ -98,7 +101,8 @@ const APP_CONTAINERS = [
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     IconSetService,
-    Title
+    Title,
+    TwoDigitDecimaNumberDirective
   ],
   bootstrap: [AppComponent],
 })
