@@ -9,8 +9,6 @@
   <c-card-body>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
       <button [cModalToggle]="verticallyCenteredModal.id" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
-
-
     </div>
 <table class="table table-striped table-hover table-responsive">
   <thead>
@@ -86,14 +84,14 @@
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-    <form cForm class="row g-3">
+    <form [formGroup]="formSpending" (ngSubmit)="onSubmit()" cForm class="row g-3">
       <c-col [md]="6">
         <label cLabel for="inputEmail4">Spending Name</label>
-        <input cFormControl id="inputEmail4" type="email" />
+        <input cFormControl id="inputEmail4" formControlName="name" />
       </c-col>
       <c-col [md]="6">
         <label cLabel for="inputCategory4">Category</label>
-        <select aria-label="Default select example" cSelect id="inputCategory4">
+        <select aria-label="Default select example" cSelect id="inputCategory4" formControlName="idCategory">
           <option>Categories</option>
           <option value="1">One</option>
           <option value="2">Two</option>
@@ -102,18 +100,16 @@
       </c-col>
       <c-col [md]="6">
         <label cLabel for="inputDate4">Date</label>
-        <input cFormControl id="inputDate4" />
+        <input cFormControl id="inputDate4" formControlName="date"/>
       </c-col>
       <c-col [md]="6">
         <label cLabel for="inputValue4">Value</label>
-        <input cFormControl id="inputValue4" />
+        <input cFormControl id="inputValue4" formControlName="value"/>
       </c-col>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button cButton type="submit">Sign in</button>
-
-
+        <button [cModalToggle]="verticallyCenteredModal.id" cButton type="submit">Save</button>
         <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
-          Close
+          Cancel
         </button>
       </div>
     </form>
