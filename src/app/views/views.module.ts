@@ -10,6 +10,7 @@ import { CardModule,  BadgeModule, GridModule, NavModule, UtilitiesModule, TabsM
 import { IconModule } from '@coreui/icons-angular';
 
 import { ViewsRoutingModule } from './views-routing.module';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { WidgetsModule } from './widgets/widgets.module';
 import { SetupComponent } from './setup/setup.component';
@@ -49,6 +50,9 @@ registerLocaleData(localePt, 'pt');
     TabsModule,
     WidgetsModule,
     HttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [
     SpendingService,

@@ -1,7 +1,13 @@
 <app-widgets-mini></app-widgets-mini>
-<c-card class="mb-4">
+<c-card class="mb-12">
   <c-card-body>
-    Chart
-    <button cButton color="primary" shape="rounded-pill">New +</button>
+    <c-row>
+    <c-col lg="6" xs="12">
+      <div echarts [options]="options1" class="demo-chart"></div>
+    </c-col>
+    <c-col lg="6" xs="12">
+      <div echarts [options]="options2" class="demo-chart"></div>
+    </c-col>
+  </c-row>
   </c-card-body>
 </c-card>
