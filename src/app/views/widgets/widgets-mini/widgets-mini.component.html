@@ -1,0 +1,50 @@
+<c-row>
+  <c-col lg="3" xs="12">
+    <c-widget-stat-f
+      [title]="'Revenues'"
+      class="mb-3"
+      color="success"
+      value="R$ 4.186,01"
+    >
+      <ng-template cTemplateId="widgetIconTemplate">
+        <svg [cIcon]="icons.cilArrowTop" size="xl" width="24"></svg>
+      </ng-template>
+    </c-widget-stat-f>
+  </c-col>
+  <c-col lg="3" xs="12">
+    <c-widget-stat-f
+      [title]="'Spendings'"
+      class="mb-3"
+      color="danger"
+      value="R$ 3.186,32"
+    >
+      <ng-template cTemplateId="widgetIconTemplate">
+        <svg [cIcon]="icons.cilArrowBottom" size="xl" width="24"></svg>
+      </ng-template>
+    </c-widget-stat-f>
+  </c-col>
+  <c-col lg="3" xs="12">
+    <c-widget-stat-f
+      [title]="'Budget'"
+      class="mb-3"
+      color="info"
+      value="89.9%"
+    >
+      <ng-template cTemplateId="widgetIconTemplate">
+        <svg [cIcon]="icons.cilChartPie" size="xl" width="24"></svg>
+      </ng-template>
+    </c-widget-stat-f>
+  </c-col>
+  <c-col lg="3" xs="12">
+    <c-widget-stat-f
+      [title]="'Balance'"
+      class="mb-3"
+      color="primary"
+      value="R$ 750,56"
+    >
+      <ng-template cTemplateId="widgetIconTemplate">
+        <svg [cIcon]="icons.cilDollar" size="xl" width="24"></svg>
+      </ng-template>
+    </c-widget-stat-f>
+  </c-col>
+</c-row>
