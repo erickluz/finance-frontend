@@ -16,6 +16,11 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-Dollar' }
   },
   {
+    name: 'Revenues',
+    url: '/views/revenues',
+    iconComponent: { name: 'cil-Dollar' }
+  },
+  {
     name: 'Setup',
     url: '/views/setup',
     linkProps: { fragment: 'someAnchor' },

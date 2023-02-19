@@ -17,8 +17,12 @@ import { SetupComponent } from './setup/setup.component';
 import { SpendingsComponent } from './spendings/spendings.component';
 import { SpendingService } from './spending.service';
 import { CategoryService } from './category.service';
+import { RevenueService } from './revenue.service';
+import { TypeRevenueService } from './type.revenue.service';
 import localePt from '@angular/common/locales/pt';
-
+import { RevenuesComponent } from './revenues/revenues.component';
+import { CustomAdapter } from './DateFormatter/CustomAdapter';
+import { CustomDateParserFormatter } from './DateFormatter/CustomDateParserFormatter';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -26,6 +30,7 @@ registerLocaleData(localePt, 'pt');
     HomeComponent,
     SetupComponent,
     SpendingsComponent,
+    RevenuesComponent,
   ],
   imports: [
     NgbPaginationModule,
@@ -57,7 +62,11 @@ registerLocaleData(localePt, 'pt');
   providers: [
     SpendingService,
     CategoryService,
+    RevenueService,
+    TypeRevenueService,
     CurrencyPipe,
+    CustomAdapter,
+    CustomDateParserFormatter,
     {
       provide: LOCALE_ID,
       useValue: 'pt'

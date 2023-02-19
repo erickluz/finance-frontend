@@ -4,65 +4,9 @@ import { Spending } from "../../model/spending.model";
 import { SpendingService } from "../spending.service";
 import { Category } from "../../model/category.model";
 import { CategoryService } from "../category.service";
-
-import { NgbPaginationModule, NgbAlertModule, NgbDatepicker, NgbDateStruct, NgbInputDatepicker, NgbDatepickerModule, NgbCalendar, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
-
-/**
- * This Service handles how the date is represented in scripts i.e. ngModel.
- */
-@Injectable()
-export class CustomAdapter extends NgbDateAdapter<string> {
-	readonly DELIMITER = '/';
-
-	fromModel(value: string | null): NgbDateStruct | null {
-		if (value) {
-			const date = value.toString().split(this.DELIMITER);
-			return {
-				day: parseInt(date[0], 10),
-				month: parseInt(date[1], 10),
-				year: parseInt(date[2], 10),
-			};
-		}
-		return null;
-	}
-
-  handleDayMomth(number: number) : string  {
-    return (number < 10) ? '0' + number : number.toString();
-  }
-
-	toModel(date: NgbDateStruct | null): string | null {
-		return date ? this.handleDayMomth(date.day) + this.DELIMITER + this.handleDayMomth(date.month) + this.DELIMITER + date.year : null;
-	}
-
-}
-
-/**
- * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
- */
-@Injectable()
-export class CustomDateParserFormatter extends NgbDateParserFormatter {
-	readonly DELIMITER = '/';
-
-	parse(value: string): NgbDateStruct | null {
-		if (value) {
-			const date = value.split(this.DELIMITER);
-			return {
-				day: parseInt(date[0], 10),
-				month: parseInt(date[1], 10),
-				year: parseInt(date[2], 10),
-			};
-		}
-		return null;
-	}
-
-  handleDayMonth(number: number) : string  {
-    return (number < 10) ? '0' + number : number.toString();
-  }
-
-	format(date: NgbDateStruct | null): string {
-		return date ? this.handleDayMonth(date.day) + this.DELIMITER + this.handleDayMonth(date.month) + this.DELIMITER + date.year : '';
-	}
-}
+import { CustomAdapter } from '../DateFormatter/CustomAdapter';
+import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserFormatter';
+import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-spendings',

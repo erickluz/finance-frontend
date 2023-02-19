@@ -9,11 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   options1: any;
   options2: any;
+
   constructor() {
+    console.log('home')
+  }
 
-   }
-
-   ngOnInit(): void {
+  ngOnInit(): void {
 
     const xAxisData = [];
     const data1 = [];
@@ -26,9 +27,8 @@ export class HomeComponent implements OnInit {
     }
 
     this.options1 = {
-
       title: {
-        text: 'Maximum Spend'
+        text: 'Budget'
       },
       tooltip: {
         trigger: 'axis'
@@ -45,39 +45,49 @@ export class HomeComponent implements OnInit {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July']
+        data: ['Jan', 'Feb', 'Mar', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dez']
       },
       yAxis: {
         type: 'value'
       },
       series: [
         {
-          name: 'Email',
+          name: 'Spendings',
           type: 'line',
           stack: 'Total',
+          color: 'blue',
+          label: {
+            show: true,
+            position: 'top'
+          },
           data: [120, 132, 101, 134, 90, 230, 210]
         },
         {
-          name: 'Union Ads',
+          name: 'Max',
           type: 'line',
+          color: 'red',
+          label: {
+            show: true,
+            position: 'top'
+          },
           stack: 'Total',
           data: [220, 182, 191, 234, 290, 330, 310]
         }
       ]
     };
 
+
     this.options2 = {
       title: {
-        text: 'Referer of a Website',
-        subtext: 'Fake Data',
+        text: 'Spendings by categories',
         left: 'center'
       },
       tooltip: {
         trigger: 'item'
       },
       legend: {
-        orient: 'vertical',
-        left: 'left'
+        orient: 'horizontal',
+        top: 'bottom'
       },
       series: [
         {
@@ -101,10 +111,5 @@ export class HomeComponent implements OnInit {
         }
       ]
     };
-
-
   }
-
-
-
 }
