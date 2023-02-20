@@ -7,6 +7,7 @@ import { CategoryService } from "../category.service";
 import { CustomAdapter } from '../DateFormatter/CustomAdapter';
 import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserFormatter';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
+import { Datedto } from 'src/app/model/datedto.model';
 
 @Component({
   selector: 'app-spendings',
@@ -17,11 +18,11 @@ import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-boot
 		{ provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
 	],
 })
-export class SpendingsComponent implements OnInit {
-  states = ['normal', 'active', 'disabled'];
-  colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+export class SpendingsComponent {
   idSpendingDelete : number = 0;
-  date: NgbDateStruct = { year: 1789, month: 7, day: 14 }; // July, 14 1789
+  selectedDate: Datedto = new Datedto("", "", "");
+  dates: Datedto[] = [];
+  dateVoid: Datedto = new Datedto("", "", "");
 	model: NgbDateStruct= {
     "year": 2023,
     "month": 2,
@@ -31,7 +32,6 @@ export class SpendingsComponent implements OnInit {
   public visibleModalDelete = false;
   spendings : Spending[] = [];
   categories : Category[] = [];
-
   private spending : Spending = new Spending("", "", "", "", "");
 
   public formSpending : FormGroup = this.formBuilder.group({
@@ -43,20 +43,44 @@ export class SpendingsComponent implements OnInit {
     value: [this.spending.value]
   });
 
-  constructor(private formBuilder: FormBuilder, private spendingService: SpendingService, private categorieService: CategoryService) { }
-
-  ngOnInit() {
-    this.getSpendings();
+  constructor(private formBuilder: FormBuilder, private spendingService: SpendingService, private categorieService: CategoryService) {
+    this.getDates();
     this.getCategories();
   }
 
-  private getSpendings() {
-    this.spendingService.get().subscribe(
-      (spending) => {
-        this.spendings = spending;
-        console.log(spending);
+  private getDates() {
+    this.spendingService.getDates().subscribe(
+      (dates) => {
+        this.dates = dates;
+        if (this.dates) {
+          for (let datedto of dates) {
+            if (datedto.monthNumber == this.getActualMonth(datedto.monthNumber)) {
+              this.selectedDate = datedto;
+            }
+          }
+          this.getSpendings();
+        }
       }
     );
+  }
+
+  getActualMonth(sdate: string): string {
+    let tmp = new Date();
+    return (tmp.getMonth() + 1).toString();
+  }
+
+  private getSpendings() {
+    if (this.selectedDate.date) {
+      console.log(this.selectedDate.date)
+      this.spendingService.get(this.selectedDate.date).subscribe(
+        (spending) => {
+          this.spendings = spending;
+          console.log(spending);
+        }
+      );
+    } else {
+      this.spendings = [];
+    }
   }
 
   private getCategories() {
@@ -96,6 +120,7 @@ export class SpendingsComponent implements OnInit {
     console.log(this.formSpending.value)
     this.spendingService.post(this.formSpending.value)
     .subscribe(() => {
+      this.getDates();
       this.getSpendings();
     })
     this.formSpending.reset();
@@ -104,6 +129,7 @@ export class SpendingsComponent implements OnInit {
   public deleteSpending() {
       this.spendingService.delete(this.idSpendingDelete).subscribe(
         () => {
+          this.getDates();
           this.getSpendings();
         }
       );
@@ -128,5 +154,10 @@ export class SpendingsComponent implements OnInit {
       model: [this.model],
       value: [spending.value]
     });
+  }
+
+  changeDate() {
+    console.log(this.selectedDate);
+    this.getSpendings();
   }
 }

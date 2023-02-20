@@ -18,6 +18,7 @@ import { SpendingsComponent } from './spendings/spendings.component';
 import { SpendingService } from './spending.service';
 import { CategoryService } from './category.service';
 import { RevenueService } from './revenue.service';
+import { DashboardService } from './dashboard.service';
 import { TypeRevenueService } from './type.revenue.service';
 import localePt from '@angular/common/locales/pt';
 import { RevenuesComponent } from './revenues/revenues.component';
@@ -67,6 +68,7 @@ registerLocaleData(localePt, 'pt');
     CurrencyPipe,
     CustomAdapter,
     CustomDateParserFormatter,
+    DashboardService,
     {
       provide: LOCALE_ID,
       useValue: 'pt'

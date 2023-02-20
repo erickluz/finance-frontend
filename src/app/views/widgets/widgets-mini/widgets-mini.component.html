@@ -4,7 +4,7 @@
       [title]="'Revenues'"
       class="mb-3"
       color="success"
-      value="R$ 4.186,01"
+      value="{{stats.totalRevenue}}"
     >
       <ng-template cTemplateId="widgetIconTemplate">
         <svg [cIcon]="icons.cilArrowTop" size="xl" width="24"></svg>
@@ -16,7 +16,7 @@
       [title]="'Spendings'"
       class="mb-3"
       color="danger"
-      value="R$ 3.186,32"
+      value="{{stats.totalSpending}}"
     >
       <ng-template cTemplateId="widgetIconTemplate">
         <svg [cIcon]="icons.cilArrowBottom" size="xl" width="24"></svg>
@@ -28,7 +28,7 @@
       [title]="'Budget'"
       class="mb-3"
       color="info"
-      value="89.9%"
+      value="{{stats.budgetPercent}}"
     >
       <ng-template cTemplateId="widgetIconTemplate">
         <svg [cIcon]="icons.cilChartPie" size="xl" width="24"></svg>
@@ -40,7 +40,7 @@
       [title]="'Balance'"
       class="mb-3"
       color="primary"
-      value="R$ 750,56"
+      value="{{stats.balance}}"
     >
       <ng-template cTemplateId="widgetIconTemplate">
         <svg [cIcon]="icons.cilDollar" size="xl" width="24"></svg>

@@ -7,6 +7,13 @@
     <strong>Spendings</strong>
   </c-card-header>
   <c-card-body>
+    <div class="d-grid gap-2 d-md-block">
+      <select [(ngModel)]="selectedDate" aria-label="Default select example" cSelect id="inputCategory4" style="width: 150px;" (change)="changeDate()">
+        <option value="{{dateVoid}}">Select a date</option>
+        <option *ngFor="let date of dates" [ngValue]="date">{{date.shortDate}}</option>
+      </select>
+
+    </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
       <button (click)="newSpending();toggleLiveDemo();" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
     </div>

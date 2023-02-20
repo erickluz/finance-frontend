@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Spending } from '../model/spending.model'
+import {Datedto} from '../model/datedto.model'
 
 @Injectable()
 export class SpendingService {
@@ -20,8 +21,8 @@ export class SpendingService {
     return this.http.post<Spending>(this.url_api, spending, this.requestOptions)
   }
 
-  public get() : Observable<Spending[]> {
-    return this.http.get<Spending[]>(this.url_api, {
+  public get(date: string) : Observable<Spending[]> {
+    return this.http.get<Spending[]>(this.url_api + '?date=' + date, {
       headers: {'Access-Control-Allow-Origin':'*'}});
   }
 
@@ -32,4 +33,9 @@ export class SpendingService {
   public findById(id: number) : Observable<Spending>  {
     return this.http.get<Spending>(this.url_api + id, this.requestOptions);
   }
+
+  public getDates() : Observable<Datedto[]> {
+    return this.http.get<Datedto[]>(this.url_api + 'dates', this.requestOptions);
+  }
+
 }
