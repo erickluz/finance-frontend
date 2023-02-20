@@ -11,7 +11,7 @@ import { DashboardService } from '../dashboard.service';
 export class HomeComponent implements OnInit {
   options1: any;
   options2: any;
-  budgetChart : BudgetChart = new BudgetChart([0], [0]);
+  budgetChart : BudgetChart = new BudgetChart([0], [0], ['']);
   constructor(private dashboardService: DashboardService) {
 
   }
@@ -25,6 +25,10 @@ export class HomeComponent implements OnInit {
       }
     )
 
+    this.options2Set();
+  }
+
+  private options2Set() {
     this.options2 = {
       title: {
         text: 'Spendings by categories',
@@ -81,7 +85,7 @@ export class HomeComponent implements OnInit {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Jan', 'Feb', 'Mar', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dez']
+        data: this.budgetChart.months
       },
       yAxis: {
         type: 'value'
