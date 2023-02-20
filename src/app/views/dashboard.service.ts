@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Stats } from '../model/stats.model';
 import { BudgetChart } from '../model/budget.chart.model';
+import { SpendingCategory } from '../model/spending.category.chart.model';
 
 @Injectable()
 export class DashboardService {
@@ -20,7 +21,12 @@ export class DashboardService {
   public getStats() : Observable<Stats> {
     return this.http.get<Stats>(this.url_api, this.requestOptions);
   }
+
   public getBudgetChart() : Observable<BudgetChart> {
     return this.http.get<BudgetChart>(this.url_api + 'budget', this.requestOptions);
+  }
+
+  public getSpendingCategoryChart() : Observable<SpendingCategory> {
+    return this.http.get<SpendingCategory>(this.url_api + 'spendingchart', this.requestOptions);
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {BudgetChart} from '../../model/budget.chart.model';
 import { DashboardService } from '../dashboard.service';
+import { SpendingCategory } from '../../model/spending.category.chart.model';
+import { ItemCategory } from '../../model/item.category.chart.model';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,7 @@ export class HomeComponent implements OnInit {
   options1: any;
   options2: any;
   budgetChart : BudgetChart = new BudgetChart([0], [0], ['']);
+  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(0, 'Empty')]);
   constructor(private dashboardService: DashboardService) {
 
   }
@@ -24,7 +27,13 @@ export class HomeComponent implements OnInit {
         this.options1Set();
       }
     )
-
+    this.dashboardService.getSpendingCategoryChart().subscribe(
+      (spendingCategory) => {
+        this.spendingCategory = spendingCategory;
+        console.log(this.spendingCategory)
+        this.options2Set();
+      }
+    )
     this.options2Set();
   }
 
@@ -46,13 +55,7 @@ export class HomeComponent implements OnInit {
           name: 'Access From',
           type: 'pie',
           radius: '50%',
-          data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-            { value: 580, name: 'Email' },
-            { value: 484, name: 'Union Ads' },
-            { value: 300, name: 'Video Ads' }
-          ],
+          data: this.spendingCategory.itens,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
