@@ -33,6 +33,8 @@ export class SpendingsComponent {
   spendings : Spending[] = [];
   categories : Category[] = [];
   private spending : Spending = new Spending("", "", "", "", "");
+  save: boolean = false;
+  lastDate: any
 
   public formSpending : FormGroup = this.formBuilder.group({
     id: [this.spending.id],
@@ -52,7 +54,7 @@ export class SpendingsComponent {
     this.spendingService.getDates().subscribe(
       (dates) => {
         this.dates = dates;
-        if (this.dates) {
+        if (this.dates && !this.save) {
           for (let datedto of dates) {
             if (datedto.monthNumber == this.getActualMonth(datedto.monthNumber)) {
               this.selectedDate = datedto;
@@ -60,6 +62,7 @@ export class SpendingsComponent {
           }
           this.getSpendings();
         }
+        this.save = false
       }
     );
   }
@@ -120,6 +123,7 @@ export class SpendingsComponent {
     console.log(this.formSpending.value)
     this.spendingService.post(this.formSpending.value)
     .subscribe(() => {
+      this.save = true;
       this.getDates();
       this.getSpendings();
     })
