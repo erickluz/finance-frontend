@@ -8,6 +8,7 @@ import { CustomAdapter } from '../DateFormatter/CustomAdapter';
 import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserFormatter';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
 import { Datedto } from 'src/app/model/datedto.model';
+import {ListItens} from '../list.itens';
 
 @Component({
   selector: 'app-spendings',
@@ -19,6 +20,7 @@ import { Datedto } from 'src/app/model/datedto.model';
 	],
 })
 export class SpendingsComponent {
+  listItens : ListItens = new ListItens();
   idSpendingDelete : number = 0;
   selectedDate: Datedto = new Datedto("", "", "");
   dates: Datedto[] = [];
@@ -46,6 +48,7 @@ export class SpendingsComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private spendingService: SpendingService, private categorieService: CategoryService) {
+    this.listItens.list = this.spending;
     this.getDates();
     this.getCategories();
   }
@@ -78,6 +81,7 @@ export class SpendingsComponent {
       this.spendingService.get(this.selectedDate.date).subscribe(
         (spending) => {
           this.spendings = spending;
+          this.listItens.list = spending
           console.log(spending);
         }
       );

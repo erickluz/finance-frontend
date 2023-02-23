@@ -24,6 +24,7 @@ import localePt from '@angular/common/locales/pt';
 import { RevenuesComponent } from './revenues/revenues.component';
 import { CustomAdapter } from './DateFormatter/CustomAdapter';
 import { CustomDateParserFormatter } from './DateFormatter/CustomDateParserFormatter';
+import {FilterPipe} from './filter.pipe';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -32,6 +33,7 @@ registerLocaleData(localePt, 'pt');
     SetupComponent,
     SpendingsComponent,
     RevenuesComponent,
+    FilterPipe
   ],
   imports: [
     NgbPaginationModule,
