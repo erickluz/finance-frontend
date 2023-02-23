@@ -26,7 +26,15 @@ export class DashboardService {
     return this.http.get<BudgetChart>(this.url_api + 'budget', this.requestOptions);
   }
 
-  public getSpendingCategoryChart() : Observable<SpendingCategory> {
-    return this.http.get<SpendingCategory>(this.url_api + 'spendingchart', this.requestOptions);
+  public getSpendingCategoryChart(initialDate?: string, finalDate?: string) : Observable<SpendingCategory> {
+    let url = this.url_api + 'spendingchart';
+    if (initialDate){
+      url = url + '?initialDate=' + initialDate;
+    }
+    if (finalDate){
+      url = url + '&finalDate=' + finalDate;
+    }
+    console.log(url)
+    return this.http.get<SpendingCategory>(url, this.requestOptions);
   }
 }

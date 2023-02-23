@@ -103,6 +103,9 @@ export class HomeComponent implements OnInit {
           name: 'Spendings',
           type: 'line',
           color: 'blue',
+          lineStyle: {
+            width: 3
+          },
           label: {
             show: true,
             position: 'top'
@@ -113,6 +116,9 @@ export class HomeComponent implements OnInit {
           name: 'Max',
           type: 'line',
           color: 'red',
+          lineStyle: {
+            width: 3
+          },
           smooth: true,
           label: {
             show: true,

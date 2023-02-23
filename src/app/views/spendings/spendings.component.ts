@@ -151,7 +151,6 @@ export class SpendingsComponent {
   public editSpending(id: string) {
     this.spendingService.findById(+id).subscribe(
       (spending) => {
-        console.log(spending);
         this.spending = spending;
         this.createForm(spending);
         this.visibleModalForm = true;
@@ -170,15 +169,12 @@ export class SpendingsComponent {
   }
 
   changeDate() {
-    console.log(this.selectedDate);
     this.getSpendings();
   }
 
   calculateTotal(event?: Event) {
     let filterValue = (event) ? (event?.target as HTMLInputElement).value : '';
-    console.log(filterValue)
     this.filteredSpendings = this.filter.transform(this.listItens.list, filterValue);
-    console.log(this.filteredSpendings)
     this.totalList = 0;
     for (let spending of this.filteredSpendings) {
       let value = spending.value.substring(3);
