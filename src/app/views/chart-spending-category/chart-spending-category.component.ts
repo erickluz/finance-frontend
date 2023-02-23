@@ -20,6 +20,7 @@ export class ChartSpendingCategoryComponent {
   options: any;
   listItensCategory: ItemCategory[] = [];
   change: boolean = false;
+  total = 0;
   spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(0, 'Empty')]);
   constructor(private dashboardService: DashboardService, private spendingService: SpendingService,) {
     this.getDates();
@@ -33,6 +34,7 @@ export class ChartSpendingCategoryComponent {
         this.spendingCategory = spendingCategory;
         this.listItensCategory = spendingCategory.itens;
         this.listItens.list = this.listItensCategory;
+        this.calculateTotal();
         this.optionsSet();
       }
     );
@@ -72,6 +74,13 @@ export class ChartSpendingCategoryComponent {
   getActualMonth(): string {
     let tmp = new Date();
     return (tmp.getMonth() + 1).toString();
+  }
+
+  calculateTotal() {
+    this.total = 0;
+    for (let spending of this.listItensCategory) {
+      this.total = this.total + spending.value;
+    }
   }
 
   private optionsSet() {

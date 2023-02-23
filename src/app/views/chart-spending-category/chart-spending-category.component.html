@@ -38,6 +38,13 @@
               <td>{{spending.value | currency}}</td>
             </tr>
           </tbody>
+          <tfoot cTableColor="dark">
+            <tr>
+              <td></td>
+              <td></td>
+              <td><h5>Total:  {{total | currency}}</h5></td>
+            </tr>
+            </tfoot>
         </table>
         <ng-template #noResults>
           <p>No results found for "{{listItens.searchText}}".</p>
