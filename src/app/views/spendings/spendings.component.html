@@ -12,13 +12,12 @@
         <option value="{{dateVoid}}">Select a date</option>
         <option *ngFor="let date of dates" [ngValue]="date">{{date.shortDate}}</option>
       </select>
-
     </div>
-    <div class="form-group mb-4">
-      <input class="form-control" type="text" [(ngModel)]="listItens.searchText" placeholder="Search">
-    </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
       <button (click)="newSpending();toggleLiveDemo();" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
+    </div>
+    <div>
+      <input (input)="calculateTotal($event)" class="form-control" style="width: 150px;" type="text" [(ngModel)]="listItens.searchText" placeholder="Search">
     </div>
 <table class="table table-striped table-hover table-responsive" *ngIf="(listItens.list | filter: listItens.searchText).length > 0; else noResults">
   <thead>
@@ -49,6 +48,11 @@
   <p>No results found for "{{listItens.searchText}}".</p>
 </ng-template>
 </c-card-body>
+<c-card-footer class="text-right">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
+    <h4>Total:  {{totalList| currency:'R$'}}</h4>
+  </div>
+</c-card-footer>
 </c-card>
 
 </c-col>

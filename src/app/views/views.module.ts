@@ -71,6 +71,7 @@ registerLocaleData(localePt, 'pt');
     CustomAdapter,
     CustomDateParserFormatter,
     DashboardService,
+    FilterPipe,
     {
       provide: LOCALE_ID,
       useValue: 'pt'

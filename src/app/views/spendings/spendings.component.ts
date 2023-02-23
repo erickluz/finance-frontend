@@ -9,6 +9,7 @@ import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserForm
 import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
 import { Datedto } from 'src/app/model/datedto.model';
 import {ListItens} from '../list.itens';
+import {FilterPipe} from '../filter.pipe';
 
 @Component({
   selector: 'app-spendings',
@@ -25,11 +26,13 @@ export class SpendingsComponent {
   selectedDate: Datedto = new Datedto("", "", "");
   dates: Datedto[] = [];
   dateVoid: Datedto = new Datedto("", "", "");
+  totalList  = 0;
 	model: NgbDateStruct= {
     "year": 2023,
     "month": 2,
     "day": 9
   };
+  filteredSpendings : Spending[] = [];
   public visibleModalForm = false;
   public visibleModalDelete = false;
   spendings : Spending[] = [];
@@ -47,7 +50,10 @@ export class SpendingsComponent {
     value: [this.spending.value]
   });
 
-  constructor(private formBuilder: FormBuilder, private spendingService: SpendingService, private categorieService: CategoryService) {
+  constructor(private formBuilder: FormBuilder,
+              private spendingService: SpendingService,
+              private categorieService: CategoryService,
+              private filter: FilterPipe) {
     this.listItens.list = this.spending;
     this.getDates();
     this.getCategories();
@@ -82,7 +88,7 @@ export class SpendingsComponent {
         (spending) => {
           this.spendings = spending;
           this.listItens.list = spending
-          console.log(spending);
+          this.calculateTotal(undefined);
         }
       );
     } else {
@@ -94,7 +100,6 @@ export class SpendingsComponent {
     this.categorieService.get().subscribe(
       (categories) => {
         this.categories = categories;
-        console.log(categories);
       }
     );
   }
@@ -167,5 +172,17 @@ export class SpendingsComponent {
   changeDate() {
     console.log(this.selectedDate);
     this.getSpendings();
+  }
+
+  calculateTotal(event?: Event) {
+    let filterValue = (event) ? (event?.target as HTMLInputElement).value : '';
+    console.log(filterValue)
+    this.filteredSpendings = this.filter.transform(this.listItens.list, filterValue);
+    console.log(this.filteredSpendings)
+    this.totalList = 0;
+    for (let spending of this.filteredSpendings) {
+      let value = spending.value.substring(3);
+      this.totalList = this.totalList + +value;
+    }
   }
 }
