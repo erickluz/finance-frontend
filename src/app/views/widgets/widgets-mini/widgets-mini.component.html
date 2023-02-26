@@ -1,50 +1,52 @@
+
 <c-row>
-  <c-col lg="3" xs="12">
-    <c-widget-stat-f
-      [title]="'Revenues'"
-      class="mb-3"
-      color="success"
-      value="{{stats.totalRevenue}}"
-    >
-      <ng-template cTemplateId="widgetIconTemplate">
-        <svg [cIcon]="icons.cilArrowTop" size="xl" width="24"></svg>
-      </ng-template>
-    </c-widget-stat-f>
-  </c-col>
-  <c-col lg="3" xs="12">
-    <c-widget-stat-f
-      [title]="'Spendings'"
-      class="mb-3"
-      color="danger"
-      value="{{stats.totalSpending}}"
-    >
-      <ng-template cTemplateId="widgetIconTemplate">
-        <svg [cIcon]="icons.cilArrowBottom" size="xl" width="24"></svg>
-      </ng-template>
-    </c-widget-stat-f>
-  </c-col>
-  <c-col lg="3" xs="12">
-    <c-widget-stat-f
-      [title]="'Budget'"
-      class="mb-3"
-      color="info"
-      value="{{stats.budgetPercent}}"
-    >
-      <ng-template cTemplateId="widgetIconTemplate">
-        <svg [cIcon]="icons.cilChartPie" size="xl" width="24"></svg>
-      </ng-template>
-    </c-widget-stat-f>
-  </c-col>
-  <c-col lg="3" xs="12">
-    <c-widget-stat-f
-      [title]="'Balance'"
-      class="mb-3"
-      color="primary"
-      value="{{stats.balance}}"
-    >
-      <ng-template cTemplateId="widgetIconTemplate">
-        <svg [cIcon]="icons.cilDollar" size="xl" width="24"></svg>
-      </ng-template>
-    </c-widget-stat-f>
-  </c-col>
+  <c-card-group >
+    <c-widget-stat-c
+    [title]="'Budget Money'"
+    value="{{stats.budgetMoney | currency}}"
+  >
+    <ng-template cTemplateId="widgetIconTemplate">
+      <svg cIcon height="36" name="cilDollar"></svg>
+    </ng-template>
+    <ng-template cTemplateId="widgetProgressTemplate">
+
+    </ng-template>
+  </c-widget-stat-c>
+  <c-widget-stat-c
+  [title]="'Spendings'"
+  value="{{stats.spendingMonth | currency}}"
+>
+  <ng-template cTemplateId="widgetIconTemplate">
+    <svg cIcon height="36" name="cilArrowBottom"></svg>
+  </ng-template>
+  <ng-template cTemplateId="widgetProgressTemplate">
+
+  </ng-template>
+</c-widget-stat-c>
+    <c-widget-stat-c
+    [title]="'Budget'"
+    value="{{stats.budgetPercentage}}%">
+    <ng-template cTemplateId="widgetIconTemplate">
+      <svg cIcon height="36" name="cilChartPie"></svg>
+    </ng-template>
+    <ng-template cTemplateId="widgetProgressTemplate">
+      <c-progress class="mt-3 mb-0" thin>
+        <c-progress-bar [value]="stats.budgetPercentage" color="primary"></c-progress-bar>
+      </c-progress>
+    </ng-template>
+  </c-widget-stat-c>
+
+<c-widget-stat-c
+[title]="'Total Balance'"
+value="{{stats.totalBalance | currency}}"
+>
+<ng-template cTemplateId="widgetIconTemplate">
+  <svg cIcon height="36" name="cilSpeedometer"></svg>
+</ng-template>
+<ng-template cTemplateId="widgetProgressTemplate">
+
+</ng-template>
+</c-widget-stat-c>
+
+  </c-card-group>
 </c-row>

@@ -1,13 +1,21 @@
 export class Stats {
-  totalRevenue: string
-  totalSpending: string
-  budgetPercent: string
-  balance: string
+  revenueMonth: string
+  spendingMonth: string
+  balanceMonth: string
+  balanceGoalMonth: string
+  budgetMoney: string
+  goalMoney: string
+  budgetPercentage: string
+  totalBalance: string
 
-  constructor(totalRevenue: string, totalSpending: string, budgetPercent: string, balance: string) {
-    this.totalRevenue = totalRevenue;
-    this.totalSpending = totalSpending;
-    this.budgetPercent = budgetPercent;
-    this.balance = balance;
+  constructor(revenueMonth: string, spendingMonth: string, balanceMonth: string, balanceGoalMonth: string, budgetMoney: string, goalMoney: string, budgetPercentage: string, totalBalance: string) {
+    this.revenueMonth = revenueMonth;
+    this.spendingMonth = spendingMonth;
+    this.balanceMonth = balanceMonth;
+    this.balanceGoalMonth = balanceGoalMonth
+    this.budgetMoney = budgetMoney;
+    this.goalMoney = goalMoney;
+    this.budgetPercentage = budgetPercentage;
+    this.totalBalance = totalBalance;
   }
 }

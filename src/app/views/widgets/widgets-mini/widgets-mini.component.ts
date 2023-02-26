@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar } from '@coreui/icons';
+import { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight } from '@coreui/icons';
 import { Stats } from 'src/app/model/stats.model';
 import { DashboardService } from '../../dashboard.service';
 
@@ -9,8 +9,8 @@ import { DashboardService } from '../../dashboard.service';
   styleUrls: ['./widgets-mini.component.scss']
 })
 export class WidgetsMiniComponent {
-  icons = { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar };
-  stats: Stats = new Stats("R$ 0,00", "R$ 0,00", "0 %", "R$ 0,00");
+  icons = { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight };
+  stats: Stats = new Stats("0", "0", "0", "0", "0", "0", "0", "0");
 
   constructor(private dashboardService: DashboardService) {
     dashboardService.getStats().subscribe(
