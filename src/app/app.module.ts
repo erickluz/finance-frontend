@@ -4,6 +4,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import {TwoDigitDecimaNumberDirective} from './views/spendings/TwoDigitDecimaNumberDirective'
+import { Globals } from './globals';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -102,7 +103,8 @@ const APP_CONTAINERS = [
     },
     IconSetService,
     Title,
-    TwoDigitDecimaNumberDirective
+    TwoDigitDecimaNumberDirective,
+    Globals,
   ],
   bootstrap: [AppComponent],
 })

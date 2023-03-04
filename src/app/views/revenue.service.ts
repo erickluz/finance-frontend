@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Revenue } from '../model/revenue.modal';
+import { Globals } from '../globals'
 
 @Injectable()
 export class RevenueService {
-  private url_api = 'http://localhost:8085/revenue/'
   headers = new HttpHeaders(
     {'Content-Type':'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -14,22 +14,26 @@ export class RevenueService {
     'Access-Control-Allow-Credentials' : 'true'
   });
   requestOptions = { headers: this.headers };
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private global: Globals){}
+
+  getUrl() {
+    return 'http://' + this.global.getServerUrl() + '/revenue/';
+  }
 
   public post(spending: Revenue) {
-    return this.http.post<Revenue>(this.url_api, spending, this.requestOptions)
+    return this.http.post<Revenue>(this.getUrl(), spending, this.requestOptions)
   }
 
   public get() : Observable<Revenue[]> {
-    return this.http.get<Revenue[]>(this.url_api, {
+    return this.http.get<Revenue[]>(this.getUrl(), {
       headers: {'Access-Control-Allow-Origin':'*'}});
   }
 
   public delete(id: number) {
-    return this.http.delete(this.url_api + id, this.requestOptions);
+    return this.http.delete(this.getUrl() + id, this.requestOptions);
   }
 
   public findById(id: number) : Observable<Revenue>  {
-    return this.http.get<Revenue>(this.url_api + id, this.requestOptions);
+    return this.http.get<Revenue>(this.getUrl() + id, this.requestOptions);
   }
 }

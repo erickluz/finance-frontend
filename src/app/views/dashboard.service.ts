@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { Stats } from '../model/stats.model';
 import { BudgetChart } from '../model/budget.chart.model';
 import { SpendingCategory } from '../model/spending.category.chart.model';
+import { Globals } from '../globals'
 
 @Injectable()
 export class DashboardService {
-  private url_api = 'http://localhost:8085/dashboard/'
   headers = new HttpHeaders(
     {'Content-Type':'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -16,18 +16,22 @@ export class DashboardService {
     'Access-Control-Allow-Credentials' : 'true'
   });
   requestOptions = { headers: this.headers };
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private global: Globals){}
+
+  getUrl() {
+    return 'http://' + this.global.getServerUrl() + '/dashboard/';
+  }
 
   public getStats() : Observable<Stats> {
-    return this.http.get<Stats>(this.url_api, this.requestOptions);
+    return this.http.get<Stats>(this.getUrl(), this.requestOptions);
   }
 
   public getBudgetChart() : Observable<BudgetChart> {
-    return this.http.get<BudgetChart>(this.url_api + 'budget', this.requestOptions);
+    return this.http.get<BudgetChart>(this.getUrl() + 'budget', this.requestOptions);
   }
 
   public getSpendingCategoryChart(initialDate?: string, finalDate?: string) : Observable<SpendingCategory> {
-    let url = this.url_api + 'spendingchart';
+    let url = this.getUrl() + 'spendingchart';
     if (initialDate){
       url = url + '?initialDate=' + initialDate;
     }

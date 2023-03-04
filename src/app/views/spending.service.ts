@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Spending } from '../model/spending.model'
-import {Datedto} from '../model/datedto.model'
+import { Datedto } from '../model/datedto.model'
+import { Globals } from '../globals'
 
 @Injectable()
 export class SpendingService {
-  private url_api = 'http://localhost:8085/spending/'
   headers = new HttpHeaders(
     {'Content-Type':'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
@@ -15,27 +15,31 @@ export class SpendingService {
     'Access-Control-Allow-Credentials' : 'true'
   });
   requestOptions = { headers: this.headers };
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private global: Globals){}
+
+  getUrl() {
+    return 'http://' + this.global.getServerUrl() + '/spending/';
+  }
 
   public post(spending: Spending) {
-    return this.http.post<Spending>(this.url_api, spending, this.requestOptions)
+    return this.http.post<Spending>(this.getUrl(), spending, this.requestOptions)
   }
 
   public get(date: string) : Observable<Spending[]> {
-    return this.http.get<Spending[]>(this.url_api + '?date=' + date, {
+    return this.http.get<Spending[]>(this.getUrl() + '?date=' + date, {
       headers: {'Access-Control-Allow-Origin':'*'}});
   }
 
   public delete(id: number) {
-    return this.http.delete(this.url_api + id, this.requestOptions);
+    return this.http.delete(this.getUrl() + id, this.requestOptions);
   }
 
   public findById(id: number) : Observable<Spending>  {
-    return this.http.get<Spending>(this.url_api + id, this.requestOptions);
+    return this.http.get<Spending>(this.getUrl() + id, this.requestOptions);
   }
 
   public getDates() : Observable<Datedto[]> {
-    return this.http.get<Datedto[]>(this.url_api + 'dates', this.requestOptions);
+    return this.http.get<Datedto[]>(this.getUrl() + 'dates', this.requestOptions);
   }
 
 }

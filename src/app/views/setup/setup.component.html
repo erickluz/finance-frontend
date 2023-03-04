@@ -1,1 +1,7 @@
-<p>setup works!</p>
+<form [formGroup]="formSetup" (ngSubmit)="onSubmit()" cForm class="row g-3">
+  <c-col [md]="6">
+    <label cLabel for="inputEmail4">Server API URL</label>
+    <input cFormControl id="inputEmail4" formControlName="server_url" />
+  </c-col>
+  <button cButton type="submit">Save</button>
+</form>
