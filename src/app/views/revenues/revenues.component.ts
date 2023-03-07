@@ -7,6 +7,7 @@ import { TypeRevenue } from 'src/app/model/type.revenue.model';
 import { CustomAdapter } from '../DateFormatter/CustomAdapter';
 import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserFormatter';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -19,6 +20,8 @@ import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-boot
 	],
 })
 export class RevenuesComponent implements OnInit {
+  visible = false;
+  errorMessage: string = '';
 	model: NgbDateStruct= {
     "year": 2023,
     "month": 2,
@@ -39,31 +42,46 @@ export class RevenuesComponent implements OnInit {
   public visibleModalDelete = false;
 
   constructor(private formBuilder: FormBuilder, private revenueService: RevenueService, private typeRevenueService: TypeRevenueService) {
-    console.log('revenue')
+
   }
 
   ngOnInit() {
     this.getRevenues();
-    this.getTypeRevenues();
   }
 
   private getRevenues() {
-    this.revenueService.get().subscribe(
-      (spending) => {
-        this.revenues = spending;
-        console.log(spending);
-      }
-    );
+    this.revenueService.get()
+    .subscribe({
+      next: this.handleRevenuesResponse.bind(this),
+      error: this.handleError.bind(this)
+   });
+  }
+
+  handleRevenuesResponse(revenues: Revenue[]) {
+    this.revenues = revenues;
   }
 
   private getTypeRevenues() {
-    this.typeRevenueService.get().subscribe(
-      (typeRevenue) => {
-        this.typeRevenue = typeRevenue;
-        console.log(typeRevenue);
-      }
-    );
+    this.typeRevenueService.get()
+    .subscribe({
+      next: this.handleTypeRevenuesResponse.bind(this),
+      error: this.handleError.bind(this)
+   });
   }
+
+  handleTypeRevenuesResponse(typeRevenue: TypeRevenue[]) {
+    this.typeRevenue = typeRevenue;
+    this.getTypeRevenues();
+  }
+
+  handleError(error: HttpErrorResponse) {
+    console.log('erro')
+    this.errorMessage = error.statusText;
+    console.log(error.statusText)
+    this.visible = !this.visible;
+    console.log(this.visible)
+  }
+
 
   toggleModal() {
     this.visibleModalForm = !this.visibleModalForm;
@@ -125,4 +143,9 @@ export class RevenuesComponent implements OnInit {
       }
     );
 }
+
+  onVisibleChange($event: boolean) {
+    this.visible = $event;
+  }
+
 }

@@ -3,6 +3,7 @@ import {BudgetChart} from '../../model/budget.chart.model';
 import { DashboardService } from '../dashboard.service';
 import { SpendingCategory } from '../../model/spending.category.chart.model';
 import { ItemCategory } from '../../model/item.category.chart.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,8 @@ import { ItemCategory } from '../../model/item.category.chart.model';
 })
 
 export class HomeComponent implements OnInit {
+  errorMessage: string = '';
+  visible = false;
   options1: any;
   options2: any;
   budgetChart : BudgetChart = new BudgetChart([0], [0], ['']);
@@ -21,18 +24,37 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.clearCharts();
-    this.dashboardService.getBudgetChart().subscribe(
-      (budgetChart) => {
-        this.budgetChart = budgetChart;
-        this.options1Set();
-      }
-    )
-    this.dashboardService.getSpendingCategoryChart().subscribe(
-      (spendingCategory) => {
-        this.spendingCategory = spendingCategory;
-        this.options2Set();
-      }
-    )
+    this.getBudgetChart();
+  }
+
+  private getSpendingCategoryChart() {
+    this.dashboardService.getSpendingCategoryChart().subscribe({
+      next: this.handleSpendingCategoryChartResponse.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
+
+  private getBudgetChart() {
+    this.dashboardService.getBudgetChart().subscribe({
+      next: this.handleBudgetChartResponse.bind(this),
+      error: this.handleError.bind(this)
+    });
+  }
+
+  handleBudgetChartResponse(budgetChart: BudgetChart) {
+    this.budgetChart = budgetChart;
+    this.options1Set();
+    this.getSpendingCategoryChart();
+  }
+
+  handleSpendingCategoryChartResponse(spendingCategory: SpendingCategory) {
+    this.spendingCategory = spendingCategory;
+    this.options2Set();
+  }
+
+  handleError(error: HttpErrorResponse) {
+    this.errorMessage = error.statusText;
+    this.visible = !this.visible;
   }
 
   clearCharts() {
@@ -128,5 +150,9 @@ export class HomeComponent implements OnInit {
         }
       ]
     };
+  }
+
+  onVisibleChange($event: boolean) {
+    this.visible = $event;
   }
 }

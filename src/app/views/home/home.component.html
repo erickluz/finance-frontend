@@ -18,3 +18,15 @@
 </c-card>
 </c-col>
 </c-row>
+
+<c-toaster position="top-end">
+  <c-toast (visibleChange)="onVisibleChange($event)"
+      [visible]="visible"
+      color="danger">
+    <c-toast-header [closeButton]="true">
+      Error
+      <small class="ms-auto">Just now</small>
+    </c-toast-header>
+    <c-toast-body>{{errorMessage}}</c-toast-body>
+  </c-toast>
+</c-toaster>

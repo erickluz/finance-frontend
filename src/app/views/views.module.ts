@@ -6,7 +6,7 @@ import { JsonPipe } from '@angular/common';
 import { CommonModule, registerLocaleData, CurrencyPipe } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 
-import { CardModule,  BadgeModule, GridModule, NavModule, UtilitiesModule, TabsModule, ButtonModule, ModalModule, FormModule } from '@coreui/angular';
+import { CardModule,  BadgeModule, GridModule, NavModule, UtilitiesModule, TabsModule, ButtonModule, ModalModule, FormModule, ToastModule} from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 
 import { ViewsRoutingModule } from './views-routing.module';
@@ -60,6 +60,7 @@ registerLocaleData(localePt, 'pt');
     TabsModule,
     WidgetsModule,
     HttpClientModule,
+    ToastModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     })

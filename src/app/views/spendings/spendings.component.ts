@@ -10,6 +10,7 @@ import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-boot
 import { Datedto } from 'src/app/model/datedto.model';
 import {ListItens} from '../list.itens';
 import {FilterPipe} from '../filter.pipe';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-spendings',
@@ -21,12 +22,14 @@ import {FilterPipe} from '../filter.pipe';
 	],
 })
 export class SpendingsComponent {
+  visible = false;
   listItens : ListItens = new ListItens();
   idSpendingDelete : number = 0;
   selectedDate: Datedto = new Datedto("", "", "");
   dates: Datedto[] = [];
   dateVoid: Datedto = new Datedto("", "", "");
   totalList  = 0;
+  errorMessage: string = '';
 	model: NgbDateStruct= {
     "year": 2023,
     "month": 2,
@@ -83,25 +86,38 @@ export class SpendingsComponent {
 
   private getSpendings() {
     if (this.selectedDate.date) {
-      console.log(this.selectedDate.date)
-      this.spendingService.get(this.selectedDate.date).subscribe(
-        (spending) => {
-          this.spendings = spending;
-          this.listItens.list = spending
-          this.calculateTotal(undefined);
-        }
-      );
+      this.spendingService.get(this.selectedDate.date)
+      .subscribe({
+        next: this.handleSpendingResponse.bind(this),
+        error: this.handleError.bind(this)
+     });
     } else {
       this.spendings = [];
     }
   }
 
+  handleSpendingResponse(spending: Spending[]) {
+    this.spendings = spending;
+    this.listItens.list = spending
+    this.calculateTotal(undefined);
+  }
+
   private getCategories() {
-    this.categorieService.get().subscribe(
-      (categories) => {
-        this.categories = categories;
-      }
-    );
+    this.categorieService.get()
+    .subscribe({
+      next: this.handleCategoriesResponse.bind(this),
+      error: this.handleError.bind(this)
+   });
+
+  }
+
+  handleCategoriesResponse(categories: Category[]) {
+    this.categories = categories;
+  }
+
+  handleError(error: HttpErrorResponse) {
+    this.errorMessage = error.statusText;
+    this.visible = !this.visible;
   }
 
   toggleLiveDemo() {
@@ -180,5 +196,9 @@ export class SpendingsComponent {
       let value = spending.value.substring(3);
       this.totalList = this.totalList + +value;
     }
+  }
+
+  onVisibleChange($event: boolean) {
+    this.visible = $event;
   }
 }
