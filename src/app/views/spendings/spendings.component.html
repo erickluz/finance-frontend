@@ -96,7 +96,7 @@
         <label cLabel for="inputParts">Part</label>
         <select aria-label="Default select example" cSelect id="inputParts" formControlName="parts">
           <option value=""></option>
-          <option *ngFor="let part of parts" value="{{part}}">{{part}}x</option>
+          <option *ngFor="let part of listParts" value="{{part}}">{{part}}x</option>
         </select>
       </c-col>
       <c-col [md]="10">
