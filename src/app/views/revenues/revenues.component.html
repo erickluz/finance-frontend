@@ -19,8 +19,8 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let revenue of revenues">
-        <th scope="row">1</th>
+      <tr *ngFor="let revenue of revenues; let i = index">
+        <th scope="row">{{i+1}}</th>
         <td>{{revenue.idType}}</td>
         <td>{{revenue.date}}</td>
         <td>{{revenue.value}}</td>

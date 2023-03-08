@@ -32,7 +32,7 @@
   </thead>
   <tbody class="table-group-divider">
     <tr *ngFor="let spending of listItens.list | filter: listItens.searchText; let i = index">
-      <th scope="row">1</th>
+      <th scope="row">{{i+1}}</th>
       <td>{{spending.name}}</td>
       <td>{{spending.date}}</td>
       <td>{{spending.idCategory}}</td>
@@ -65,7 +65,7 @@
   </c-modal-header>
   <c-modal-body>
     <form [formGroup]="formSpending" (ngSubmit)="onSubmit()" cForm class="row g-3">
-      <c-col [md]="6">
+      <c-col [md]="12">
         <label cLabel for="inputEmail4">Spending Name</label>
         <input cFormControl id="inputEmail4" formControlName="name" />
       </c-col>
@@ -92,7 +92,14 @@
           <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"><svg cIcon name="cilCalendar" size="lg"></svg></button>
         </div>
       </c-col>
-      <c-col [md]="6">
+      <c-col [md]="2">
+        <label cLabel for="inputParts">Part</label>
+        <select aria-label="Default select example" cSelect id="inputParts" formControlName="parts">
+          <option value=""></option>
+          <option *ngFor="let part of parts" value="{{part}}">{{part}}x</option>
+        </select>
+      </c-col>
+      <c-col [md]="10">
         <label cLabel for="inputValue4">Value</label>
         <input appTwoDigitDecimaNumber cFormControl type="number" id="inputValue4" formControlName="value"/>
       </c-col>

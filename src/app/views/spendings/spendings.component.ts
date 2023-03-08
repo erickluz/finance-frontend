@@ -28,6 +28,7 @@ export class SpendingsComponent {
   selectedDate: Datedto = new Datedto("", "", "");
   dates: Datedto[] = [];
   dateVoid: Datedto = new Datedto("", "", "");
+  parts : number [] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   totalList  = 0;
   errorMessage: string = '';
 	model: NgbDateStruct= {
@@ -40,7 +41,7 @@ export class SpendingsComponent {
   public visibleModalDelete = false;
   spendings : Spending[] = [];
   categories : Category[] = [];
-  private spending : Spending = new Spending("", "", "", "", "");
+  private spending : Spending = new Spending("", "", "", "", "", "");
   save: boolean = false;
   lastDate: any
 
@@ -50,7 +51,8 @@ export class SpendingsComponent {
     idCategory: [this.spending.idCategory],
     date: [this.spending.date],
     model: [this.model],
-    value: [this.spending.value]
+    value: [this.spending.value],
+    parts: [this.parts]
   });
 
   constructor(private formBuilder: FormBuilder,
@@ -140,7 +142,7 @@ export class SpendingsComponent {
   }
 
   public newSpending() {
-    this.spending = new Spending("", "", "", "", "");
+    this.spending = new Spending("", "", "", "", "", "");
 
   }
 
@@ -180,7 +182,8 @@ export class SpendingsComponent {
       idCategory: [spending.idCategory],
       date: [spending.date],
       model: [this.model],
-      value: [spending.value]
+      value: [spending.value],
+      parts: [spending.parts]
     });
   }
 
