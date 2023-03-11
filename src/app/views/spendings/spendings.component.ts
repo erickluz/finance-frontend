@@ -146,7 +146,6 @@ export class SpendingsComponent {
   }
 
   public onSubmit() {
-    console.log(this.formSpending.value)
     this.spendingService.post(this.formSpending.value)
     .subscribe(() => {
       this.save = true;

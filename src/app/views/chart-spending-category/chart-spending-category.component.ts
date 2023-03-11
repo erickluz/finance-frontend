@@ -21,7 +21,8 @@ export class ChartSpendingCategoryComponent {
   listItensCategory: ItemCategory[] = [];
   change: boolean = false;
   total = 0;
-  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(0, 'Empty')]);
+  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);
+
   constructor(private dashboardService: DashboardService, private spendingService: SpendingService,) {
     this.getDates();
   }
@@ -32,6 +33,7 @@ export class ChartSpendingCategoryComponent {
     .subscribe(
       (spendingCategory) => {
         this.spendingCategory = spendingCategory;
+        this.adjustItens(spendingCategory.itens)
         this.listItensCategory = spendingCategory.itens;
         this.listItens.list = this.listItensCategory;
         this.calculateTotal();
@@ -40,15 +42,19 @@ export class ChartSpendingCategoryComponent {
     );
   }
 
+  adjustItens(itens: ItemCategory[]) {
+    for (let item of itens) {
+      item.check = true
+    }
+  }
+
   changeDate() {
     this.change = true
-    console.log(this.selectedInitialDate)
-    console.log(this.selectedFinalDate)
     this.getDates();
   }
 
   clearCharts() {
-    this.spendingCategory = new SpendingCategory([new ItemCategory(0, 'Empty')]);;
+    this.spendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);;
     this.optionsSet();
   }
 
@@ -76,10 +82,19 @@ export class ChartSpendingCategoryComponent {
     return (tmp.getMonth() + 1).toString();
   }
 
-  calculateTotal() {
+  fieldsChange(values:any, i : number):void {
+    console.log(values.target.checked);
+    this.listItensCategory[i].check = values.target.checked
+    this.calculateTotal()
+  }
+
+  public calculateTotal() {
+    console.log(this.listItensCategory)
     this.total = 0;
     for (let spending of this.listItensCategory) {
-      this.total = this.total + spending.value;
+      if (spending.check) {
+        this.total = this.total + spending.value;
+      }
     }
   }
 

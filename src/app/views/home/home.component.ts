@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   options1: any;
   options2: any;
   budgetChart : BudgetChart = new BudgetChart([0], [0], ['']);
-  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(0, 'Empty')]);
+  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);
   constructor(private dashboardService: DashboardService) {
 
   }
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
 
   clearCharts() {
     this.budgetChart = new BudgetChart([0], [0], ['']);
-    this.spendingCategory = new SpendingCategory([new ItemCategory(0, 'Empty')]);;
+    this.spendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);;
     this.options1Set();
     this.options2Set();
   }

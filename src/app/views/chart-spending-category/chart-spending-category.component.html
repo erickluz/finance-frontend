@@ -36,6 +36,7 @@
           </thead>
           <tbody class="table-group-divider">
             <tr *ngFor="let spending of listItens.list | filter: listItens.searchText; let i = index">
+              <th><input (change)="fieldsChange($event, i)" [checked]="listItensCategory[i].check" id="check" type="checkbox" /></th>
               <th scope="row">{{i+1}}</th>
               <td>{{spending.name}}</td>
               <td>{{spending.value | currency}}</td>
