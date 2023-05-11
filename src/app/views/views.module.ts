@@ -19,6 +19,7 @@ import { SpendingService } from './spending.service';
 import { CategoryService } from './category.service';
 import { RevenueService } from './revenue.service';
 import { DashboardService } from './dashboard.service';
+import { CardService } from './card.service';
 import { TypeRevenueService } from './type.revenue.service';
 import localePt from '@angular/common/locales/pt';
 import { RevenuesComponent } from './revenues/revenues.component';
@@ -26,6 +27,7 @@ import { CustomAdapter } from './DateFormatter/CustomAdapter';
 import { CustomDateParserFormatter } from './DateFormatter/CustomDateParserFormatter';
 import {FilterPipe} from './filter.pipe';
 import { ChartSpendingCategoryComponent } from './chart-spending-category/chart-spending-category.component';
+import { CardsComponent } from './cards/cards.component';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -35,7 +37,8 @@ registerLocaleData(localePt, 'pt');
     SpendingsComponent,
     RevenuesComponent,
     FilterPipe,
-    ChartSpendingCategoryComponent
+    ChartSpendingCategoryComponent,
+    CardsComponent
   ],
   imports: [
     NgbPaginationModule,
@@ -74,6 +77,7 @@ registerLocaleData(localePt, 'pt');
     CustomAdapter,
     CustomDateParserFormatter,
     DashboardService,
+    CardService,
     FilterPipe,
     {
       provide: LOCALE_ID,

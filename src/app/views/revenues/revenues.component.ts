@@ -128,7 +128,6 @@ export class RevenuesComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log(this.formRevenue.value)
     this.revenueService.post(this.formRevenue.value)
     .subscribe(() => {
       this.getRevenues();

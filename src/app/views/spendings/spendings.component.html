@@ -7,35 +7,46 @@
     <strong>Spendings</strong>
   </c-card-header>
   <c-card-body>
-    <div class="d-grid gap-2 d-md-block">
-      <select [(ngModel)]="selectedDate" aria-label="Default select example" cSelect id="inputCategory4" style="width: 150px;" (change)="changeDate()">
-        <option value="{{dateVoid}}">Select a date</option>
-        <option *ngFor="let date of dates" [ngValue]="date">{{date.shortDate}}</option>
-      </select>
-    </div>
+    <c-row>
+      <c-col lg="2" xs="12">
+        <div class="d-grid gap-2 d-md-block">
+          <select  [(ngModel)]="selectedDate" cSelect id="inputDateFilter" style="width: 150px;" (change)="changeDate()">
+            <option value="{{dateVoid}}">Select a date</option>
+            <option *ngFor="let date of dates" [ngValue]="date">{{date.shortDate}}</option>
+          </select>
+        </div>
+      </c-col>
+      <c-col lg="3" xs="12">
+        <select [(ngModel)]="selectedFilterBudget" cSelect id="inputCardFilter" style="width: 170px;" (change)="changeBudgetFilter()">
+          <option *ngFor="let option of optionsFilterBudget" [ngValue]="option">{{option}}</option>
+        </select>
+      </c-col>
+    </c-row>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
       <button (click)="newSpending();toggleLiveDemo();" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
     </div>
     <div>
       <input (input)="calculateTotal($event)" class="form-control" style="width: 150px;" type="text" [(ngModel)]="listItens.searchText" placeholder="Search">
     </div>
-<table class="table table-striped table-hover table-responsive" *ngIf="(listItens.list | filter: listItens.searchText).length > 0; else noResults">
+<table class="table table-striped table-hover table-responsive" *ngIf="sizeList((listItens.list | filter: listItens.searchText)) > 0; else noResults">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Spending</th>
       <th scope="col">Date</th>
       <th scope="col">Category</th>
+      <th scope="col">Card</th>
       <th scope="col">Value</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let spending of listItens.list | filter: listItens.searchText; let i = index">
+    <tr *ngFor="let spending of listItens.list | filter:  listItens.searchText; let i = index;">
       <th scope="row">{{i+1}}</th>
       <td>{{spending.name}}</td>
       <td>{{spending.date}}</td>
       <td>{{spending.idCategory}}</td>
+      <td>{{spending.card}}</td>
       <td>{{spending.value}}</td>
       <td>
         <button style="margin-right: 10px;" (click)="editSpending(spending.id)" cButton color="info"><svg cIcon name="cilPencil" cTextColor="white" size="lg"></svg></button>
@@ -58,25 +69,32 @@
 </c-col>
 </c-row>
 
-<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal" [visible]="visibleModalForm" (visibleChange)="handleLiveDemoChange($event)">
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal" [visible]="visibleModalForm" (visibleChange)="handleLiveDemoChange($event)"  size="lg">
   <c-modal-header>
     <h5 cModalTitle>Insert Spending</h5>
     <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-    <form [formGroup]="formSpending" (ngSubmit)="onSubmit()" cForm class="row g-3">
+    <form [formGroup]="formSpending" (ngSubmit)="onSubmit()" cForm class="row g-4">
       <c-col [md]="12">
         <label cLabel for="inputEmail4">Spending Name</label>
         <input cFormControl id="inputEmail4" formControlName="name" />
       </c-col>
-      <c-col [md]="6">
+      <c-col [md]="4">
         <label cLabel for="inputCategory4">Category</label>
         <select aria-label="Default select example" cSelect id="inputCategory4" formControlName="idCategory">
           <option value="">Select a category</option>
           <option *ngFor="let cat of categories" value="{{cat.id}}">{{cat.name}}</option>
         </select>
       </c-col>
-      <c-col [md]="6">
+      <c-col [md]="4">
+        <label cLabel for="inputCard4">Card</label>
+        <select aria-label="Default select example" cSelect id="inputCard4" formControlName="idCard">
+          <option value="">Select a card</option>
+          <option *ngFor="let card of cards" value="{{card.id}}">{{card.issuer}}</option>
+        </select>
+      </c-col>
+      <c-col [md]="4">
         <label cLabel for="inputDate4">Date</label>
         <div class="input-group">
           <input

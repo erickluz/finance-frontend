@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { IconSetService } from '@coreui/icons-angular';
@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'Financial';
+  title = isDevMode() ? 'Financial (DEV)' : 'Financial';
 
   constructor(
     private router: Router,
@@ -28,5 +28,6 @@ export class AppComponent implements OnInit {
         return;
       }
     });
+
   }
 }

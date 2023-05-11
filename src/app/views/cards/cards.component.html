@@ -1,0 +1,94 @@
+<c-row>
+  <c-col *ngFor="let card of cards; index as i" [lg]="4">
+    <c-card class="h-100 mb-3" [color]="card.color" [textColor]="card.color === 'warning' || card.color === 'light' ? '' :  'white'">
+      <c-card-body>
+        <h5 cCardTitle>{{card.issuer}}</h5>
+        <p cCardText>
+          **** **** **** {{card.finalNumber}}
+        </p>
+        <p cCardText>
+          {{card.brand}}
+        </p>
+        <p cCardText>
+          {{getTypeCardName(card.type)}}
+        </p>
+        <p cCardText *ngIf="card.isBudget">
+          Budget
+        </p>
+        <button cButton (click)="editCard(card.id)" [color]="card.color" class="shadow">Edit</button>
+        <button cButton (click)="toggleModalDelete(card.id)" [color]="card.color" class="shadow">Delete</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col [lg]="4">
+    <c-card class="h-100 text-center">
+      <c-card-body>
+        <p cCardText>
+          <br/><br/>
+        </p>
+        <button cButton (click)="newCard();toggleModal();" color="light">Add +</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal" [visible]="visibleModalForm" (visibleChange)="handleLiveDemoChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Insert New Card</h5>
+    <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form [formGroup]="formCard" (ngSubmit)="onSubmit()" cForm class="row g-3">
+      <c-col [md]="6">
+        <label cLabel for="inputIssuer">Issuer</label>
+        <input cFormControl id="inputIssuer" formControlName="issuer" />
+      </c-col>
+      <c-col [md]="4">
+        <label cLabel for="inputBrand">Brand Card</label>
+        <input cFormControl id="inputBrand" formControlName="brand" />
+      </c-col>
+      <c-col [md]="4">
+        <label cLabel for="inputFinalNumber">Final Number</label>
+        <input cFormControl id="inputFinalNumber" formControlName="finalNumber" />
+      </c-col>
+      <c-col [md]="6">
+        <label cLabel for="inputColor">Color</label>
+        <select aria-label="Default select example" cSelect id="inputColor" formControlName="color">
+          <option value="">Color</option>
+          <option *ngFor="let color of colors" value="{{color.color}}">{{color.color}}</option>
+        </select>
+      </c-col>
+      <c-col [md]="6">
+        <label cLabel for="inputType">Type</label>
+        <select aria-label="Default select example" cSelect id="inputType" formControlName="type">
+          <option value="">Type</option>
+          <option *ngFor="let type of typeCards" value="{{type.id}}">{{type.name}}</option>
+        </select>
+      </c-col>
+      <c-col [md]="6">
+        <input cFormCheckInput id="inputIsBudget" type="checkbox" formControlName="isBudget"/>
+        <label cFormCheckLabel for="inputIsBudget">Is Budget</label>
+      </c-col>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button (click)="toggleModal()" cButton type="submit">Save</button>
+        <button (click)="toggleModal()" cButton color="secondary">Cancel</button>
+      </div>
+    </form>
+
+  </c-modal-body>
+</c-modal>
+
+<c-modal #deleteModal alignment="center" id="deleteModal" [visible]="visibleModalDelete" (visibleChange)="handleModalDelete($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Delete Card?</h5>
+    <button [cModalToggle]="deleteModal.id" cButtonClose></button>
+  </c-modal-header>
+    <p>Are your shure to delete item?&hellip;</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button (click)="deleteCard();toggleModalDelete('')" cButton >Yes</button>
+      <button (click)="toggleModalDelete('')" cButton color="secondary">No</button>
+    </div>
+  <c-modal-body>
+  </c-modal-body>
+</c-modal>

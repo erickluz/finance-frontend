@@ -125,4 +125,11 @@ export class ChartSpendingCategoryComponent {
     };
   }
 
+  sizeList(list : any[]) : boolean {
+    if (list === undefined || list == null) {
+      return true
+    } else {
+      return false;
+    }
+  }
 }

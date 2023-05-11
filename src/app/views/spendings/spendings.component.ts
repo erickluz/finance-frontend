@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { Spending } from "../../model/spending.model";
 import { SpendingService } from "../spending.service";
 import { Category } from "../../model/category.model";
+import { Card } from "../../model/card.modal";
 import { CategoryService } from "../category.service";
+import { CardService } from "../card.service";
 import { CustomAdapter } from '../DateFormatter/CustomAdapter';
 import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserFormatter';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
@@ -26,9 +28,14 @@ export class SpendingsComponent {
   listItens : ListItens = new ListItens();
   idSpendingDelete : number = 0;
   selectedDate: Datedto = new Datedto("", "", "");
+  selectedCard: Card = new Card("", "", "", "", "", "", false);
   dates: Datedto[] = [];
   dateVoid: Datedto = new Datedto("", "", "");
   listParts: number [] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  optionsFilterBudget : string [] = ["All", "Only budget", "No budget"];
+  selectedFilterBudget : string = "All";
+  public static filterBudget : string | undefined = "All";
+  public static allCards : Card[];
   totalList  = 0;
   errorMessage: string = '';
 	model: NgbDateStruct= {
@@ -36,12 +43,13 @@ export class SpendingsComponent {
     "month": 2,
     "day": 9
   };
-  filteredSpendings : Spending[] = [];
+  filteredSpendings : Spending[] | undefined = [];
   public visibleModalForm = false;
   public visibleModalDelete = false;
   spendings : Spending[] = [];
   categories : Category[] = [];
-  private spending : Spending = new Spending("", "", "", "", "", "");
+  cards : Card[] = [];
+  private spending : Spending = new Spending("", "", "", "", "", "", "", "");
   save: boolean = false;
   lastDate: any
 
@@ -49,6 +57,7 @@ export class SpendingsComponent {
     id: [this.spending.id],
     name: [this.spending.name],
     idCategory: [this.spending.idCategory],
+    idCard: [this.spending.idCard],
     date: [this.spending.date],
     value: [this.spending.value],
     parts: [this.spending.parts]
@@ -57,6 +66,7 @@ export class SpendingsComponent {
   constructor(private formBuilder: FormBuilder,
               private spendingService: SpendingService,
               private categorieService: CategoryService,
+              private cardService: CardService,
               private filter: FilterPipe) {
     this.listItens.list = this.spending;
     this.getDates();
@@ -85,7 +95,7 @@ export class SpendingsComponent {
     return (tmp.getMonth() + 1).toString();
   }
 
-  private getSpendings() {
+  private async getSpendings() : Promise<any> {
     if (this.selectedDate.date) {
       this.spendingService.get(this.selectedDate.date)
       .subscribe({
@@ -100,6 +110,7 @@ export class SpendingsComponent {
   handleSpendingResponse(spending: Spending[]) {
     this.spendings = spending;
     this.listItens.list = spending
+    this.getCards();
     this.calculateTotal(undefined);
   }
 
@@ -114,6 +125,19 @@ export class SpendingsComponent {
 
   handleCategoriesResponse(categories: Category[]) {
     this.categories = categories;
+  }
+
+  private getCards() {
+    this.cardService.get()
+    .subscribe({
+      next: this.handleCardResponse.bind(this),
+      error: this.handleError.bind(this)
+   });
+  }
+
+  handleCardResponse(cards: Card[]) {
+    this.cards = cards;
+    SpendingsComponent.allCards = this.cards;
   }
 
   handleError(error: HttpErrorResponse) {
@@ -141,8 +165,8 @@ export class SpendingsComponent {
   }
 
   public newSpending() {
-    this.spending = new Spending("", "", "", "", "", "");
-
+    this.spending = new Spending("", "", "", "", "", "", "", "");
+    this.formSpending.reset();
   }
 
   public onSubmit() {
@@ -178,6 +202,7 @@ export class SpendingsComponent {
       id: [spending.id],
       name: [spending.name],
       idCategory: [spending.idCategory],
+      idCard: [spending.idCard],
       date: [spending.date],
       value: [spending.value],
       parts: [spending.parts]
@@ -188,17 +213,38 @@ export class SpendingsComponent {
     this.getSpendings();
   }
 
+  changeBudgetFilter() {
+    this.getSpendings().then( () => {
+      SpendingsComponent.filterBudget = this.selectedFilterBudget;
+      this.calculate(undefined);
+    })
+  }
+
   calculateTotal(event?: Event) {
     let filterValue = (event) ? (event?.target as HTMLInputElement).value : '';
+    this.calculate(filterValue);
+  }
+
+  private calculate(filterValue: string | undefined) {
     this.filteredSpendings = this.filter.transform(this.listItens.list, filterValue);
     this.totalList = 0;
-    for (let spending of this.filteredSpendings) {
-      let value = spending.value.substring(3);
-      this.totalList = this.totalList + +value;
+    if (this.filteredSpendings) {
+      for (let spending of this.filteredSpendings) {
+        let value = spending.value.substring(3);
+        this.totalList = this.totalList + +value;
+      }
     }
   }
 
   onVisibleChange($event: boolean) {
     this.visible = $event;
+  }
+
+  sizeList(list : any[] | undefined) : number {
+    if (list === undefined) {
+      return 0
+    } else {
+      return list.length;
+    }
   }
 }
