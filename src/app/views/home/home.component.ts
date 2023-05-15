@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BudgetChart} from '../../model/budget.chart.model';
+import { BudgetChart } from '../../model/budget.chart.model';
 import { DashboardService } from '../dashboard.service';
 import { SpendingCategory } from '../../model/spending.category.chart.model';
 import { ItemCategory } from '../../model/item.category.chart.model';
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   visible = false;
   options1: any;
   options2: any;
-  budgetChart : BudgetChart = new BudgetChart([0], [0], ['']);
+  budgetChart : BudgetChart = new BudgetChart([0], [0], [0], ['']);
   spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);
   constructor(private dashboardService: DashboardService) {
 
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
   }
 
   clearCharts() {
-    this.budgetChart = new BudgetChart([0], [0], ['']);
+    this.budgetChart = new BudgetChart([0], [0], [0], ['']);
     this.spendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);;
     this.options1Set();
     this.options2Set();

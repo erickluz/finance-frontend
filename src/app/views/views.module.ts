@@ -28,6 +28,7 @@ import { CustomDateParserFormatter } from './DateFormatter/CustomDateParserForma
 import {FilterPipe} from './filter.pipe';
 import { ChartSpendingCategoryComponent } from './chart-spending-category/chart-spending-category.component';
 import { CardsComponent } from './cards/cards.component';
+import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-detail.component';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -38,7 +39,8 @@ registerLocaleData(localePt, 'pt');
     RevenuesComponent,
     FilterPipe,
     ChartSpendingCategoryComponent,
-    CardsComponent
+    CardsComponent,
+    ChartBudgetDetailComponent
   ],
   imports: [
     NgbPaginationModule,
