@@ -5,6 +5,7 @@ import { Stats } from '../model/stats.model';
 import { BudgetChart } from '../model/budget.chart.model';
 import { SpendingCategory } from '../model/spending.category.chart.model';
 import { Globals } from '../globals'
+import { SpendingDayChart } from '../model/spending.day.chart.model'
 
 @Injectable()
 export class DashboardService {
@@ -40,5 +41,9 @@ export class DashboardService {
     }
     console.log(url)
     return this.http.get<SpendingCategory>(url, this.requestOptions);
+  }
+
+  public getSpendingPerDay() : Observable<SpendingDayChart> {
+    return this.http.get<SpendingDayChart>(this.getUrl() + 'spendingByDay', this.requestOptions);
   }
 }
