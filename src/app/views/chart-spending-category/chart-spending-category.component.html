@@ -5,9 +5,9 @@
   <c-card-body>
     <c-row>
       <c-col lg="2" xs="12">
-          <label cLabel for="inputCategory4">Initial Date</label>
+          <label cLabel for="inputCategory3">Initial Date</label>
           <select [(ngModel)]="selectedInitialDate"
-            cSelect id="inputCategory4" style="width: 150px;" (change)="changeDate()">
+            cSelect id="inputCategory3" style="width: 150px;" (change)="changeFilters()">
             <option value="{{dateVoid}}">Select a date</option>
             <option *ngFor="let date of dates" [ngValue]="date">{{date.shortDate}}</option>
           </select>
@@ -15,10 +15,16 @@
       <c-col lg="2" xs="12">
           <label cLabel for="inputCategory4">Final Date</label>
           <select [(ngModel)]="selectedFinalDate"
-            cSelect id="inputCategory4" style="width: 150px;" (change)="changeDate()">
+            cSelect id="inputCategory4" style="width: 150px;" (change)="changeFilters()">
             <option value="{{dateVoid}}">Select a date</option>
             <option *ngFor="let date of dates" [ngValue]="date">{{date.shortDate}}</option>
           </select>
+      </c-col>
+      <c-col lg="3" xs="12">
+        <label cLabel for="inputCardFilter">Budget</label>
+        <select [(ngModel)]="selectedFilterBudget" cSelect id="inputCardFilter" style="width: 170px;" (change)="changeFilters()">
+          <option *ngFor="let option of optionsFilterBudget" [ngValue]="option">{{option}}</option>
+        </select>
       </c-col>
     </c-row>
     <c-row>

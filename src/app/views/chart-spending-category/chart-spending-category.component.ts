@@ -22,6 +22,8 @@ export class ChartSpendingCategoryComponent {
   change: boolean = false;
   total = 0;
   spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);
+  optionsFilterBudget : string [] = ["All", "Only budget", "No budget"];
+  selectedFilterBudget : string = "All";
 
   constructor(private dashboardService: DashboardService, private spendingService: SpendingService,) {
     this.getDates();
@@ -29,7 +31,7 @@ export class ChartSpendingCategoryComponent {
 
   private getSpendings() {
     this.clearCharts();
-    this.dashboardService.getSpendingCategoryChart(this.selectedInitialDate.date, this.selectedFinalDate.date)
+    this.dashboardService.getSpendingCategoryChart(this.selectedInitialDate.date, this.selectedFinalDate.date, this.selectedFilterBudget)
     .subscribe(
       (spendingCategory) => {
         this.spendingCategory = spendingCategory;
@@ -48,7 +50,7 @@ export class ChartSpendingCategoryComponent {
     }
   }
 
-  changeDate() {
+  changeFilters() {
     this.change = true
     this.getDates();
   }
@@ -83,13 +85,11 @@ export class ChartSpendingCategoryComponent {
   }
 
   fieldsChange(values:any, i : number):void {
-    console.log(values.target.checked);
     this.listItensCategory[i].check = values.target.checked
     this.calculateTotal()
   }
 
   public calculateTotal() {
-    console.log(this.listItensCategory)
     this.total = 0;
     for (let spending of this.listItensCategory) {
       if (spending.check) {

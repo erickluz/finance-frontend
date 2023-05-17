@@ -31,7 +31,7 @@ export class DashboardService {
     return this.http.get<BudgetChart>(this.getUrl() + 'budget', this.requestOptions);
   }
 
-  public getSpendingCategoryChart(initialDate?: string, finalDate?: string) : Observable<SpendingCategory> {
+  public getSpendingCategoryChart(initialDate?: string, finalDate?: string, budget?: string) : Observable<SpendingCategory> {
     let url = this.getUrl() + 'spendingchart';
     if (initialDate){
       url = url + '?initialDate=' + initialDate;
@@ -39,7 +39,9 @@ export class DashboardService {
     if (finalDate){
       url = url + '&finalDate=' + finalDate;
     }
-    console.log(url)
+    if (budget){
+      url = url + '&budget=' + budget;
+    }
     return this.http.get<SpendingCategory>(url, this.requestOptions);
   }
 

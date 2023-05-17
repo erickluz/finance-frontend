@@ -25,8 +25,7 @@ export class TypeRevenueService {
   }
 
   public get() : Observable<TypeRevenue[]> {
-    return this.http.get<TypeRevenue[]>(this.getUrl(), {
-      headers: {'Access-Control-Allow-Origin':'*'}});
+    return this.http.get<TypeRevenue[]>(this.getUrl(), this.requestOptions);
   }
 
   public delete(id: number) {
