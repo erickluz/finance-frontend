@@ -59,6 +59,7 @@ export class RevenuesComponent implements OnInit {
 
   handleRevenuesResponse(revenues: Revenue[]) {
     this.revenues = revenues;
+    this.getTypeRevenues();
   }
 
   private getTypeRevenues() {
@@ -71,7 +72,6 @@ export class RevenuesComponent implements OnInit {
 
   handleTypeRevenuesResponse(typeRevenue: TypeRevenue[]) {
     this.typeRevenue = typeRevenue;
-    this.getTypeRevenues();
   }
 
   handleError(error: HttpErrorResponse) {
