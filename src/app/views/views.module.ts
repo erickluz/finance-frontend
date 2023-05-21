@@ -45,6 +45,7 @@ import { ChartSpendingCategoryComponent } from './chart-spending-category/chart-
 import { CardsComponent } from './cards/cards.component';
 import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-detail.component';
 import { StatsDetailComponent } from './stats-detail/stats-detail.component';
+import { CategoryComponent } from './category/category.component';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -57,7 +58,8 @@ registerLocaleData(localePt, 'pt');
     ChartSpendingCategoryComponent,
     CardsComponent,
     ChartBudgetDetailComponent,
-    StatsDetailComponent
+    StatsDetailComponent,
+    CategoryComponent
   ],
   imports: [
     NgbPaginationModule,

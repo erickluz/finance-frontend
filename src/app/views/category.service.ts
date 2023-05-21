@@ -6,8 +6,14 @@ import { Globals } from '../globals'
 
 @Injectable()
 export class CategoryService {
-  headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
-
+  headers = new HttpHeaders(
+    {'Content-Type':'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': this.getUrl(),
+    'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+    'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
+    'Access-Control-Allow-Credentials' : 'true'
+  });
+  requestOptions = { headers: this.headers };
   constructor(private http: HttpClient, private global: Globals){}
 
   getUrl() {
@@ -15,15 +21,8 @@ export class CategoryService {
   }
 
   public post(category: Category) {
-    const headers = new HttpHeaders(
-      {'Content-Type':'application/json; charset=utf-8',
-      'Access-Control-Allow-Origin': this.getUrl(),
-      'Access-Control-Allow-Methods':'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-      'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
-      'Access-Control-Allow-Credentials' : 'true'
-    });
-    const requestOptions = { headers: headers };
-    return this.http.post<Category>(this.getUrl(), category, requestOptions)
+
+    return this.http.post<Category>(this.getUrl(), category, this.requestOptions)
   }
 
   public get() : Observable<Category[]> {
@@ -32,8 +31,11 @@ export class CategoryService {
   }
 
   public delete(id: number) {
-    this.http.delete(this.getUrl() + "/" + id,{
-      headers: {'Access-Control-Allow-Origin':'*'}});
+    return this.http.delete(this.getUrl() + id, this.requestOptions);
+  }
+
+  public findById(id: number) : Observable<Category>  {
+    return this.http.get<Category>(this.getUrl() + id, this.requestOptions);
   }
 
 }

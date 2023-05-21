@@ -1,0 +1,74 @@
+<c-row>
+  <c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header>
+      <strong>Category</strong>
+    </c-card-header>
+    <c-card-body>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
+        <button (click)="newCategory();toggleLiveDemo();" cButton><svg cIcon name="cilFile" size="lg"></svg> New</button>
+      </div>
+      <div>
+        <input class="form-control" style="width: 150px;" type="text" [(ngModel)]="listItens.searchText" placeholder="Search">
+      </div>
+  <table class="table table-striped table-hover table-responsive" *ngIf="sizeList((listItens.list | filter: listItens.searchText)) > 0; else noResults">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let category of listItens.list | filter:  listItens.searchText; let i = index;">
+        <th scope="row">{{i+1}}</th>
+        <td>{{category.name}}</td>
+        <td>
+          <button style="margin-right: 10px;" (click)="editCategory(category.id)" cButton color="info"><svg cIcon name="cilPencil" cTextColor="white" size="lg"></svg></button>
+          <button (click)="toggleModalDelete(category.id)" cButton color="danger"><svg cIcon name="cilTrash" cTextColor="white" size="lg"></svg></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noResults>
+    <p>No results found for "{{listItens.searchText}}".</p>
+  </ng-template>
+  </c-card-body>
+
+  </c-card>
+
+  </c-col>
+  </c-row>
+
+  <c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal" [visible]="visibleModalForm" (visibleChange)="handleLiveDemoChange($event)"  size="lg">
+    <c-modal-header>
+      <h5 cModalTitle>Insert Category</h5>
+      <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <form [formGroup]="formCategory" (ngSubmit)="onSubmit()" cForm class="row g-4">
+        <c-col [md]="12">
+          <label cLabel for="inputName4">Name</label>
+          <input cFormControl id="inputName4" formControlName="name" />
+        </c-col>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button (click)="toggleLiveDemo()" cButton type="submit">Save</button>
+          <button (click)="toggleLiveDemo()" cButton color="secondary">Cancel</button>
+        </div>
+      </form>
+    </c-modal-body>
+  </c-modal>
+
+  <c-modal #deleteModal alignment="center" id="deleteModal" [visible]="visibleModalDelete" (visibleChange)="handleModalDelete($event)">
+    <c-modal-header>
+      <h5 cModalTitle>Delete Category</h5>
+      <button [cModalToggle]="deleteModal.id" cButtonClose></button>
+    </c-modal-header>
+      <p>Are your shure to delete item?&hellip;</p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button (click)="deleteCategory();toggleModalDelete('')" cButton >Yes</button>
+        <button (click)="toggleModalDelete('')" cButton color="secondary">No</button>
+      </div>
+    <c-modal-body>
+    </c-modal-body>
+  </c-modal>
+
