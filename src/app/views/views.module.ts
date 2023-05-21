@@ -6,7 +6,22 @@ import { JsonPipe } from '@angular/common';
 import { CommonModule, registerLocaleData, CurrencyPipe } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 
-import { CardModule,  BadgeModule, GridModule, NavModule, UtilitiesModule, TabsModule, ButtonModule, ModalModule, FormModule, ToastModule} from '@coreui/angular';
+import {
+  WidgetModule,
+  ProgressModule,
+  CardModule,
+  BadgeModule,
+  GridModule,
+  NavModule,
+  UtilitiesModule,
+  TabsModule,
+  ButtonModule,
+  ModalModule,
+  FormModule,
+  ToastModule,
+  DropdownModule,
+  SharedModule,
+} from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 
 import { ViewsRoutingModule } from './views-routing.module';
@@ -29,6 +44,7 @@ import {FilterPipe} from './filter.pipe';
 import { ChartSpendingCategoryComponent } from './chart-spending-category/chart-spending-category.component';
 import { CardsComponent } from './cards/cards.component';
 import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-detail.component';
+import { StatsDetailComponent } from './stats-detail/stats-detail.component';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -40,7 +56,8 @@ registerLocaleData(localePt, 'pt');
     FilterPipe,
     ChartSpendingCategoryComponent,
     CardsComponent,
-    ChartBudgetDetailComponent
+    ChartBudgetDetailComponent,
+    StatsDetailComponent
   ],
   imports: [
     NgbPaginationModule,
@@ -66,6 +83,10 @@ registerLocaleData(localePt, 'pt');
     WidgetsModule,
     HttpClientModule,
     ToastModule,
+    WidgetModule,
+    ProgressModule,
+    DropdownModule,
+  SharedModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     })

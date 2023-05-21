@@ -10,7 +10,7 @@ import { DashboardService } from '../../dashboard.service';
 })
 export class WidgetsMiniComponent {
   icons = { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight };
-  stats: Stats = new Stats("0", "0", "0", "0", "0", "0", "0", "0");
+  stats: Stats = new Stats("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
 
   constructor(private dashboardService: DashboardService) {
     dashboardService.getStats().subscribe(
