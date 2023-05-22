@@ -21,7 +21,7 @@ export class ChartSpendingCategoryComponent {
   listItensCategory: ItemCategory[] = [];
   change: boolean = false;
   total = 0;
-  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);
+  spendingCategory: SpendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty', '')]);
   optionsFilterBudget : string [] = ["All", "Only budget", "No budget"];
   selectedFilterBudget : string = "All";
 
@@ -56,7 +56,7 @@ export class ChartSpendingCategoryComponent {
   }
 
   clearCharts() {
-    this.spendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty')]);;
+    this.spendingCategory = new SpendingCategory([new ItemCategory(true, 0, 'Empty', '')]);;
     this.optionsSet();
   }
 

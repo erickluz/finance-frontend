@@ -21,8 +21,8 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-Dollar' }
   },
   {
-    name: 'Registrations',
-    iconComponent: { name: 'cil-puzzle' },
+    name: 'Administration',
+    iconComponent: { name: 'cil-Layers' },
     children: [
       {
         name: 'Cards',
@@ -32,7 +32,7 @@ export const navItems: INavData[] = [
       {
         name: 'Category',
         url: '/views/category',
-        iconComponent: { name: 'cil-CreditCard' }
+        iconComponent: { name: 'cil-puzzle' }
       },
     ]
   },
