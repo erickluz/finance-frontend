@@ -10,6 +10,7 @@ import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-d
 import { StatsDetailComponent } from './stats-detail/stats-detail.component';
 import { CardsComponent } from './cards/cards.component';
 import { CategoryComponent } from './category/category.component';
+import { BudgetComponent } from './budget/budget.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,13 @@ const routes: Routes = [
         component: CategoryComponent,
         data: {
           title: 'Category',
+        },
+      },
+      {
+        path: 'budget',
+        component: BudgetComponent,
+        data: {
+          title: 'Budget',
         },
       },
     ],

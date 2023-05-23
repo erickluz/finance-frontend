@@ -34,6 +34,11 @@ export const navItems: INavData[] = [
         url: '/views/category',
         iconComponent: { name: 'cil-puzzle' }
       },
+      {
+        name: 'Budget',
+        url: '/views/budget',
+        iconComponent: { name: 'cil-chart' }
+      },
     ]
   },
   {

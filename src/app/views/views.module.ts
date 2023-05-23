@@ -32,6 +32,7 @@ import { SetupComponent } from './setup/setup.component';
 import { SpendingsComponent } from './spendings/spendings.component';
 import { SpendingService } from './spending.service';
 import { CategoryService } from './category.service';
+import { BudgetService } from './budget.service';
 import { RevenueService } from './revenue.service';
 import { DashboardService } from './dashboard.service';
 import { CardService } from './card.service';
@@ -46,6 +47,7 @@ import { CardsComponent } from './cards/cards.component';
 import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-detail.component';
 import { StatsDetailComponent } from './stats-detail/stats-detail.component';
 import { CategoryComponent } from './category/category.component';
+import { BudgetComponent } from './budget/budget.component';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -59,7 +61,8 @@ registerLocaleData(localePt, 'pt');
     CardsComponent,
     ChartBudgetDetailComponent,
     StatsDetailComponent,
-    CategoryComponent
+    CategoryComponent,
+    BudgetComponent
   ],
   imports: [
     NgbPaginationModule,
@@ -104,6 +107,7 @@ registerLocaleData(localePt, 'pt');
     DashboardService,
     CardService,
     FilterPipe,
+    BudgetService,
     {
       provide: LOCALE_ID,
       useValue: 'pt'

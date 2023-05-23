@@ -28,7 +28,7 @@ export class DashboardService {
   }
 
   public getBudgetChart() : Observable<BudgetChart> {
-    return this.http.get<BudgetChart>(this.getUrl() + 'budget', this.requestOptions);
+    return this.http.get<BudgetChart>(this.getUrl() + 'budgetChart', this.requestOptions);
   }
 
   public getSpendingCategoryChart(initialDate?: string, finalDate?: string, budget?: string) : Observable<SpendingCategory> {
