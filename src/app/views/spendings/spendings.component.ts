@@ -49,7 +49,7 @@ export class SpendingsComponent {
   spendings : Spending[] = [];
   categories : Category[] = [];
   cards : Card[] = [];
-  private spending : Spending = new Spending("", "", "", "", "", "", "", "");
+  private spending : Spending = new Spending("", "", "",0, "", "", "", "", "", "", false);
   save: boolean = false;
   lastDate: any
 
@@ -165,18 +165,35 @@ export class SpendingsComponent {
   }
 
   public newSpending() {
-    this.spending = new Spending("", "", "", "", "", "", "", "");
+    this.spending = new Spending("", "", "", 0, "", "", "", "", "", "", false);
     this.formSpending.reset();
   }
 
   public onSubmit() {
-    this.spendingService.post(this.formSpending.value)
-    .subscribe(() => {
-      this.save = true;
-      this.getDates();
-      this.getSpendings();
-    })
+    if (this.spending.id) {
+      this.updateSpending();
+    } else {
+      this.saveSpending();
+    }
     this.formSpending.reset();
+  }
+
+  private saveSpending() {
+    this.spendingService.post(this.formSpending.value)
+      .subscribe(() => {
+        this.save = true;
+        this.getDates();
+        this.getSpendings();
+      });
+  }
+
+  private updateSpending() {
+    this.spendingService.put(this.formSpending.value)
+      .subscribe(() => {
+        this.save = true;
+        this.getDates();
+        this.getSpendings();
+      });
   }
 
   public deleteSpending() {
@@ -198,6 +215,8 @@ export class SpendingsComponent {
   }
 
   createForm(spending: Spending) {
+    if (spending.type == 3)
+      spending.name = spending.namePart
     this.formSpending = this.formBuilder.group({
       id: [spending.id],
       name: [spending.name],

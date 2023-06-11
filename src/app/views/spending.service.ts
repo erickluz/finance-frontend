@@ -25,6 +25,10 @@ export class SpendingService {
     return this.http.post<Spending>(this.getUrl(), spending, this.requestOptions)
   }
 
+  public put(spending: Spending) {
+    return this.http.put<Spending>(this.getUrl(), spending, this.requestOptions)
+  }
+
   public get(date: string) : Observable<Spending[]> {
     return this.http.get<Spending[]>(this.getUrl() + '?date=' + date, {
       headers: {'Access-Control-Allow-Origin':'*'}});
