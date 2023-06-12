@@ -25,7 +25,7 @@ export class ChartSpendingCategoryComponent {
   optionsFilterBudget : string [] = ["All", "Only budget", "No budget"];
   selectedFilterBudget : string = "All";
 
-  constructor(private dashboardService: DashboardService, private spendingService: SpendingService,) {
+  constructor(private dashboardService: DashboardService, private spendingService: SpendingService) {
     this.getDates();
   }
 

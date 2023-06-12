@@ -27,8 +27,15 @@ export class DashboardService {
     return this.http.get<Stats>(this.getUrl(), this.requestOptions);
   }
 
-  public getBudgetChart() : Observable<BudgetChart> {
-    return this.http.get<BudgetChart>(this.getUrl() + 'budgetChart', this.requestOptions);
+  public getBudgetChart(initialDate?: string, finalDate?: string) : Observable<BudgetChart> {
+    let url = this.getUrl() + 'budgetChart';
+    if (initialDate){
+      url = url + '?initialDate=' + initialDate;
+    }
+    if (finalDate){
+      url = url + '&finalDate=' + finalDate;
+    }
+    return this.http.get<BudgetChart>(url, this.requestOptions);
   }
 
   public getSpendingCategoryChart(initialDate?: string, finalDate?: string, budget?: string) : Observable<SpendingCategory> {

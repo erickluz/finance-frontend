@@ -3,6 +3,8 @@ import { DashboardService } from '../dashboard.service';
 import {BudgetChart} from '../../model/budget.chart.model';
 import {SpendingDayChart} from '../../model/spending.day.chart.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Datedto } from 'src/app/model/datedto.model';
+import { SpendingService } from "../spending.service";
 
 @Component({
   selector: 'app-chart-budget-detail',
@@ -12,23 +14,85 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ChartBudgetDetailComponent {
   options1: any;
   options2: any;
-  budgetChart : BudgetChart = new BudgetChart([0], [0], [0],['']);
+  budgetChart : BudgetChart = new BudgetChart([0], [0], [0], ['']);
   spendingDayChart : SpendingDayChart = new SpendingDayChart([0], []);
   errorMessage: string = '';
   visible = false;
+  selectedInitialDate: Datedto = new Datedto("", "", "");
+  selectedFinalDate: Datedto = new Datedto("", "", "");
+  change: boolean = false;
+  dates: Datedto[] = [];
+  dateVoid: Datedto = new Datedto("", "", "");
 
-  constructor(private dashboardService: DashboardService) {
-
+  constructor(private dashboardService: DashboardService, private spendingService: SpendingService) {
+    this.getDates();
   }
 
   ngOnInit(): void {
     this.clearCharts();
-    this.getBudgetChart();
     this.getSpendingByDay();
   }
 
+  private getDates() {
+    this.spendingService.getDates().subscribe(
+      (dates) => {
+        // this.setActualMonth(dates);
+        this.setOneYearDateDefault(dates);
+        this.getBudgetChart();
+      }
+    );
+  }
+  setOneYearDateDefault(dates: Datedto[]) {
+    if (!this.change) {
+      this.dates = dates;
+      if (this.dates) {
+        for (let i = 0; i < dates.length; i++) {
+          if (dates[i].monthNumber == this.getActualMonth()) {
+            let j = i;
+            j -= 5;
+            if (j < 0) {
+              j = 0;
+            }
+            this.selectedInitialDate = dates[j];
+            j = i
+            j += 6
+            if (j > dates.length) {
+              j = dates.length
+            }
+            console.log(j)
+            this.selectedFinalDate = dates[j];
+          }
+        }
+      }
+    }
+  }
+
+  private setActualMonth(dates: Datedto[]) {
+    if (!this.change) {
+      this.dates = dates;
+      if (this.dates) {
+        for (let datedto of dates) {
+          if (datedto.monthNumber == this.getActualMonth()) {
+            this.selectedInitialDate = datedto;
+            this.selectedFinalDate = datedto;
+          }
+        }
+      }
+    }
+  }
+
+  changeFilters() {
+    this.change = true
+    this.getDates();
+  }
+
+  getActualMonth(): string {
+    let tmp = new Date();
+    return (tmp.getMonth() + 1).toString();
+  }
+
   private getBudgetChart() {
-    this.dashboardService.getBudgetChart().subscribe({
+    this.dashboardService.getBudgetChart(this.selectedInitialDate.date, this.selectedFinalDate.date).subscribe({
       next: this.handleBudgetChartResponse.bind(this),
       error: this.handleError.bind(this)
     });
@@ -65,9 +129,6 @@ export class ChartBudgetDetailComponent {
 
   private options1Set() {
     this.options1 = {
-      title: {
-        text: 'Budget'
-      },
       tooltip: {
         trigger: 'axis'
       },
@@ -143,9 +204,6 @@ export class ChartBudgetDetailComponent {
 
   private options2Set() {
     this.options2 = {
-      title: {
-        text: 'Spendings by day in actual month'
-      },
       tooltip: {
         trigger: 'axis'
       },

@@ -1,2 +1,54 @@
-<div echarts [options]="options1" class="demo-chart"></div>
-<div echarts [options]="options2" class="demo-chart"></div>
+<c-card class="mb-12">
+  <c-card-header>
+    <strong>Budget</strong>
+  </c-card-header>
+  <c-card-body>
+    <c-row>
+      <c-col lg="2" xs="12">
+        <label cLabel for="inputCategory3">Initial Date</label>
+        <select
+          [(ngModel)]="selectedInitialDate"
+          cSelect
+          id="inputCategory3"
+          style="width: 150px"
+          (change)="changeFilters()"
+        >
+          <option value="{{ dateVoid }}">Select a date</option>
+          <option *ngFor="let date of dates" [ngValue]="date">
+            {{ date.shortDate }}
+          </option>
+        </select>
+      </c-col>
+      <c-col lg="2" xs="12">
+        <label cLabel for="inputCategory4">Final Date</label>
+        <select
+          [(ngModel)]="selectedFinalDate"
+          cSelect
+          id="inputCategory4"
+          style="width: 150px"
+          (change)="changeFilters()"
+        >
+          <option value="{{ dateVoid }}">Select a date</option>
+          <option *ngFor="let date of dates" [ngValue]="date">
+            {{ date.shortDate }}
+          </option>
+        </select>
+      </c-col>
+    </c-row>
+    <br />
+    <c-row>
+      <div echarts [options]="options1" class="demo-chart"></div>
+    </c-row>
+  </c-card-body>
+</c-card>
+<br/>
+<c-card class="mb-12">
+  <c-card-header>
+    <strong>Spendings by day in actual month</strong>
+  </c-card-header>
+  <c-card-body>
+    <c-row>
+      <div echarts [options]="options2" class="demo-chart"></div>
+    </c-row>
+  </c-card-body>
+</c-card>
