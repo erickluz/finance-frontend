@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { Stats } from 'src/app/model/stats.model';
+import { MonthStats } from 'src/app/model/month.stats.model';
+import { TotalsStats } from 'src/app/model/totals.stats.model';
 import { DashboardService } from '../dashboard.service';
+import { SpendingService } from "../spending.service";
+import { Datedto } from 'src/app/model/datedto.model';
 import { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight } from '@coreui/icons';
 
 @Component({
@@ -10,14 +13,61 @@ import { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight } fr
 })
 
 export class StatsDetailComponent {
-  stats: Stats = new Stats("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+  monthStats: MonthStats = new MonthStats("0", "0", "0", "0", "0", "0", "0");
+  totalsStats: TotalsStats = new TotalsStats("0", "0", "0", "0", "0");
   icons = { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight };
+  dateVoid: Datedto = new Datedto("", "", "");
+  dates: Datedto[] = [];
+  selectedInitialDate: Datedto = new Datedto("", "", "");
+  selectedFinalDate: Datedto = new Datedto("", "", "");
+  change: boolean = false;
 
-  constructor(private dashboardService: DashboardService) {
-    dashboardService.getStats().subscribe(
+  constructor(private dashboardService: DashboardService, private spendingService: SpendingService) {
+    this.getMonthStats(dashboardService);
+    this.getDates();
+  }
+
+  private getMonthStats(dashboardService: DashboardService) {
+    dashboardService.getMonthStats().subscribe(
       (stats) => {
-        this.stats = stats;
+        this.monthStats = stats;
       }
-    )
+    );
+  }
+
+  private getDates() {
+    this.spendingService.getDates().subscribe(
+      (dates) => {
+        if (!this.change) {
+          this.dates = dates;
+          this.selectedInitialDate = dates[0];
+          this.selectedFinalDate =  this.setActualMonth(dates);
+        }
+        this.dashboardService.getTotalsStats(this.selectedInitialDate.date, this.selectedFinalDate.date).subscribe(
+          (stats) => {
+            this.totalsStats = stats;
+          }
+        );
+      }
+    );
+  }
+
+  private setActualMonth(dates: Datedto[]) : Datedto {
+    for (let datedto of dates) {
+      if (datedto.monthNumber == this.getActualMonth()) {
+        return datedto;
+      }
+    }
+    return dates[dates.length-1];
+  }
+
+  getActualMonth(): string {
+    let tmp = new Date();
+    return (tmp.getMonth() + 1).toString();
+  }
+
+  changeFilters() {
+    this.change = true
+    this.getDates();
   }
 }

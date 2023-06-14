@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Stats } from '../model/stats.model';
+import { MonthStats } from '../model/month.stats.model';
+import { TotalsStats } from '../model/totals.stats.model';
 import { BudgetChart } from '../model/budget.chart.model';
 import { SpendingCategory } from '../model/spending.category.chart.model';
 import { Globals } from '../globals'
@@ -23,8 +24,17 @@ export class DashboardService {
     return 'http://' + this.global.getServerUrl() + '/dashboard/';
   }
 
-  public getStats() : Observable<Stats> {
-    return this.http.get<Stats>(this.getUrl(), this.requestOptions);
+  public getMonthStats(date?:string) : Observable<MonthStats> {
+    let url : string = this.getUrl() + 'monthStats';
+    if (date) {
+      url = url + '?date=' + date;
+    }
+    return this.http.get<MonthStats>(url, this.requestOptions);
+  }
+
+  public getTotalsStats(initialDate:string, finalDate:string) : Observable<TotalsStats> {
+    let url : string = this.getUrl() + 'totalsStats?initialDate=' + initialDate + '&finalDate=' + finalDate;
+    return this.http.get<TotalsStats>(url, this.requestOptions);
   }
 
   public getBudgetChart(initialDate?: string, finalDate?: string) : Observable<BudgetChart> {

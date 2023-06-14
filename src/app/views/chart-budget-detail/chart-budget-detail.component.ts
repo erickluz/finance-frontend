@@ -36,7 +36,6 @@ export class ChartBudgetDetailComponent {
   private getDates() {
     this.spendingService.getDates().subscribe(
       (dates) => {
-        // this.setActualMonth(dates);
         this.setOneYearDateDefault(dates);
         this.getBudgetChart();
       }
@@ -61,20 +60,6 @@ export class ChartBudgetDetailComponent {
             }
             console.log(j)
             this.selectedFinalDate = dates[j];
-          }
-        }
-      }
-    }
-  }
-
-  private setActualMonth(dates: Datedto[]) {
-    if (!this.change) {
-      this.dates = dates;
-      if (this.dates) {
-        for (let datedto of dates) {
-          if (datedto.monthNumber == this.getActualMonth()) {
-            this.selectedInitialDate = datedto;
-            this.selectedFinalDate = datedto;
           }
         }
       }
