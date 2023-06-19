@@ -13,6 +13,7 @@ import { Datedto } from 'src/app/model/datedto.model';
 import {ListItens} from '../list.itens';
 import {FilterPipe} from '../filter.pipe';
 import { HttpErrorResponse } from '@angular/common/http';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-spendings',
@@ -38,39 +39,36 @@ export class SpendingsComponent {
   public static allCards : Card[];
   totalList  = 0;
   errorMessage: string = '';
-	model: NgbDateStruct= {
-    "year": 2023,
-    "month": 2,
-    "day": 9
-  };
   filteredSpendings : Spending[] | undefined = [];
   public visibleModalForm = false;
   public visibleModalDelete = false;
   spendings : Spending[] = [];
   categories : Category[] = [];
   cards : Card[] = [];
-  private spending : Spending = new Spending("", "", "",0, "", "", "", "", "", "", false);
+  private spending : Spending;
   save: boolean = false;
   lastDate: any
 
-  public formSpending : FormGroup = this.formBuilder.group({
-    id: [this.spending.id],
-    name: [this.spending.name],
-    idCategory: [this.spending.idCategory],
-    idCard: [this.spending.idCard],
-    date: [this.spending.date],
-    value: [this.spending.value],
-    parts: [this.spending.parts]
-  });
+  formSpending : FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               private spendingService: SpendingService,
               private categorieService: CategoryService,
               private cardService: CardService,
               private filter: FilterPipe) {
+    this.spending = new Spending("", "", "", 0, "", formatDate(Date.now(),'dd/MM/yyyy','pt-BR'), "", "", "", "", false);
     this.listItens.list = this.spending;
     this.getDates();
     this.getCategories();
+    this.formSpending = this.formBuilder.group({
+      id: [this.spending.id],
+      name: [this.spending.name],
+      idCategory: [this.spending.idCategory],
+      idCard: [this.spending.idCard],
+      date: [this.spending.date],
+      value: [this.spending.value],
+      parts: [this.spending.parts]
+    });
   }
 
   private getDates() {
@@ -165,8 +163,9 @@ export class SpendingsComponent {
   }
 
   public newSpending() {
-    this.spending = new Spending("", "", "", 0, "", "", "", "", "", "", false);
     this.formSpending.reset();
+    this.spending = new Spending("", "", "", 0, "", formatDate(Date.now(),'dd/MM/yyyy','pt-BR'), "", "", "", "", false);
+    this.createForm(this.spending)
   }
 
   public onSubmit() {
