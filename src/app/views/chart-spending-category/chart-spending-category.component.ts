@@ -67,7 +67,8 @@ export class ChartSpendingCategoryComponent {
           this.dates = dates;
           if (this.dates) {
             for (let datedto of dates) {
-              if (datedto.monthNumber == this.getActualMonth()) {
+              if (datedto.monthNumber == this.getActualMonth()
+                && new Date(datedto.date).getFullYear().toString() == new Date().getFullYear().toString()) {
                 this.selectedInitialDate = datedto;
                 this.selectedFinalDate = datedto;
               }
@@ -133,3 +134,7 @@ export class ChartSpendingCategoryComponent {
     }
   }
 }
+function isActualMonthAndYear(datedto: Datedto) {
+  throw new Error('Function not implemented.');
+}
+

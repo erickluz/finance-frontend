@@ -77,7 +77,8 @@ export class SpendingsComponent {
         this.dates = dates;
         if (this.dates && !this.save) {
           for (let datedto of dates) {
-            if (datedto.monthNumber == this.getActualMonth(datedto.monthNumber)) {
+            if (datedto.monthNumber == this.getActualMonth()
+            && new Date(datedto.date).getFullYear().toString() == new Date().getFullYear().toString()) {
               this.selectedDate = datedto;
             }
           }
@@ -88,7 +89,7 @@ export class SpendingsComponent {
     );
   }
 
-  getActualMonth(sdate: string): string {
+  getActualMonth(): string {
     let tmp = new Date();
     return (tmp.getMonth() + 1).toString();
   }

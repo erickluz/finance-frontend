@@ -54,7 +54,8 @@ export class StatsDetailComponent {
 
   private setActualMonth(dates: Datedto[]) : Datedto {
     for (let datedto of dates) {
-      if (datedto.monthNumber == this.getActualMonth()) {
+      if (datedto.monthNumber == this.getActualMonth()
+      && new Date(datedto.date).getFullYear().toString() == new Date().getFullYear().toString()) {
         return datedto;
       }
     }

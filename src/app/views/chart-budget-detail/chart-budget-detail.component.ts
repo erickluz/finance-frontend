@@ -46,7 +46,8 @@ export class ChartBudgetDetailComponent {
       this.dates = dates;
       if (this.dates) {
         for (let i = 0; i < dates.length; i++) {
-          if (dates[i].monthNumber == this.getActualMonth()) {
+          if (dates[i].monthNumber == this.getActualMonth()
+            && new Date(dates[i].date).getFullYear().toString() == new Date().getFullYear().toString()) {
             let j = i;
             j -= 5;
             if (j < 0) {
