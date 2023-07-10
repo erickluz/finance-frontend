@@ -177,7 +177,6 @@ export class ChartBudgetDetailComponent {
           lineStyle: {
             width: 3
           },
-          smooth: true,
           label: {
             show: true,
             position: 'top'
