@@ -14,7 +14,7 @@ import { Datedto } from 'src/app/model/datedto.model';
 export class WidgetsMiniComponent {
   icons = { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight };
   monthStats: MonthStats = new MonthStats("0", "0", "0", "0", "0", "0", "0");
-  totalsStats: TotalsStats = new TotalsStats("0", "0", "0", "0", "0");
+  totalsStats: TotalsStats = new TotalsStats("0", "0", "0", "0", "0", "0");
 
   constructor(private dashboardService: DashboardService, private spendingService: SpendingService) {
     dashboardService.getMonthStats().subscribe(

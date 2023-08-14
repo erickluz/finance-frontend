@@ -49,6 +49,7 @@ import {
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { ViewsModule } from './views/views.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RecurringBillingComponent } from './recurring-billing/recurring-billing.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -61,7 +62,7 @@ const APP_CONTAINERS = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS],
+  declarations: [AppComponent, ...APP_CONTAINERS, RecurringBillingComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

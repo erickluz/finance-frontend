@@ -14,7 +14,7 @@ import { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight } fr
 
 export class StatsDetailComponent {
   monthStats: MonthStats = new MonthStats("0", "0", "0", "0", "0", "0", "0");
-  totalsStats: TotalsStats = new TotalsStats("0", "0", "0", "0", "0");
+  totalsStats: TotalsStats = new TotalsStats("0", "0", "0", "0", "0", "0");
   icons = { cilChartPie, cilArrowTop, cilArrowBottom, cilDollar, cilArrowRight };
   dateVoid: Datedto = new Datedto("", "", "");
   dates: Datedto[] = [];
