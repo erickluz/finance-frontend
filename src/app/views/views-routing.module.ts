@@ -5,6 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { RevenuesComponent } from './revenues/revenues.component';
 import { SetupComponent } from './setup/setup.component';
 import { SpendingsComponent } from './spendings/spendings.component';
+import { SpendingCheckComponent } from './spending-check/spending-check.component';
+import { SpendingCheckMonthComponent } from './spending-check-month/spending-check-month.component';
+import { SpendingCheckMonthSelectComponent } from './spending-check-month-select/spending-check-month-select.component';
 import { ChartSpendingCategoryComponent } from './chart-spending-category/chart-spending-category.component';
 import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-detail.component';
 import { StatsDetailComponent } from './stats-detail/stats-detail.component';
@@ -92,6 +95,34 @@ const routes: Routes = [
         component: BudgetComponent,
         data: {
           title: 'Budget',
+        },
+      },
+      {
+        path: 'spending-check',
+        component: SpendingCheckComponent,
+        data: {
+          title: 'Spending Check',
+        },
+      },
+      {
+        path: 'spending-check-month',
+        component: SpendingCheckMonthComponent,
+        data: {
+          title: 'Spending Check Month',
+        },
+      },
+      {
+        path: 'spending-check-month-select',
+        component: SpendingCheckMonthSelectComponent,
+        data: {
+          title: 'Spending Check Month Select',
+        },
+      },
+      {
+        path: 'spending-check-month-select/:id',
+        component: SpendingCheckMonthSelectComponent,
+        data: {
+          title: 'Spending Check Month Select',
         },
       },
     ],

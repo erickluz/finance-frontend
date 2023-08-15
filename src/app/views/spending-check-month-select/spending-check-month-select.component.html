@@ -1,0 +1,65 @@
+<c-card class="mb-4">
+  <c-card-body>
+    <form [formGroup]="formSpending" cForm class="row g-4">
+      <c-col [md]="4">
+        <label cLabel for="inputEmail4">Spending Name</label>
+        <input cFormControl id="inputEmail4" formControlName="name" readonly/>
+      </c-col>
+      <c-col [md]="4">
+        <label cLabel for="inputEmail4">Date</label>
+        <input cFormControl id="inputEmail4" formControlName="date" readonly/>
+      </c-col>
+      <c-col [md]="4">
+        <label cLabel for="inputEmail4">Value</label>
+        <input cFormControl id="inputEmail4" formControlName="value" readonly/>
+      </c-col>
+    </form>
+  </c-card-body>
+</c-card>
+
+<c-card class="mb-4">
+  <c-card-body>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
+      <button cButton><svg cIcon name="cilCheck" size="lg"></svg> Confirm</button>
+    </div>
+    <table
+      class="table table-striped table-hover table-responsive"
+      *ngIf="
+        sizeList(listItens.list | filter : listItens.searchText) > 0;
+        else noResults
+      "
+      responsive
+      cAlign="middle"
+      cTable
+    >
+      <thead>
+        <tr>
+          <th scope="col">Description</th>
+          <th scope="col">Date</th>
+          <th scope="col">Value</th>
+          <th scope="col">Part</th>
+          <th scope="col">Select</th>
+
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr
+          *ngFor="
+            let spending of listItens.list | filter : listItens.searchText;
+            let i = index
+          "
+        >
+          <td>{{ spending.description }}</td>
+          <td>{{ spending.date }}</td>
+          <td>{{ spending.value | currency }}</td>
+          <td>{{ spending.part }}</td>
+          <!-- <td><input (change)="fieldsChange($event, i)" [checked]="listItensCategory[i].check" id="check" type="checkbox" /></td> -->
+          <td><input id="check" type="checkbox" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noResults>
+      <p>No results found for "{{ listItens.searchText }}".</p>
+    </ng-template>
+  </c-card-body>
+</c-card>

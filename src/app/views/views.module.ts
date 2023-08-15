@@ -26,7 +26,7 @@ import { IconModule } from '@coreui/icons-angular';
 
 import { ViewsRoutingModule } from './views-routing.module';
 import { NgxEchartsModule } from 'ngx-echarts';
-
+import { RouterModule } from '@angular/router';
 import { WidgetsModule } from './widgets/widgets.module';
 import { SetupComponent } from './setup/setup.component';
 import { SpendingsComponent } from './spendings/spendings.component';
@@ -48,6 +48,9 @@ import { ChartBudgetDetailComponent } from './chart-budget-detail/chart-budget-d
 import { StatsDetailComponent } from './stats-detail/stats-detail.component';
 import { CategoryComponent } from './category/category.component';
 import { BudgetComponent } from './budget/budget.component';
+import { SpendingCheckComponent } from './spending-check/spending-check.component';
+import { SpendingCheckMonthComponent } from './spending-check-month/spending-check-month.component';
+import { SpendingCheckMonthSelectComponent } from './spending-check-month-select/spending-check-month-select.component';
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
@@ -62,7 +65,10 @@ registerLocaleData(localePt, 'pt');
     ChartBudgetDetailComponent,
     StatsDetailComponent,
     CategoryComponent,
-    BudgetComponent
+    BudgetComponent,
+    SpendingCheckComponent,
+    SpendingCheckMonthComponent,
+    SpendingCheckMonthSelectComponent
   ],
   imports: [
     NgbPaginationModule,
@@ -91,6 +97,7 @@ registerLocaleData(localePt, 'pt');
     WidgetModule,
     ProgressModule,
     DropdownModule,
+    RouterModule,
   SharedModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')

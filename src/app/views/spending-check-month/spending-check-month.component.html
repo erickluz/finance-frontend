@@ -1,0 +1,45 @@
+<c-card class="mb-12">
+  <c-card-header>
+    <strong>Spendings  </strong>
+  </c-card-header>
+  <c-card-body>
+    <c-row>
+      <c-col lg="12" xs="12">
+        <table class="table table-striped table-hover table-responsive" *ngIf="
+            sizeList(listItens.list | filter : listItens.searchText) > 0;
+            else noResults
+          " responsive cAlign="middle" cTable>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Card</th>
+              <th scope="col">Value</th>
+              <th scope="col">checked</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="
+                let spending of listItens.list | filter : listItens.searchText;
+                let i = index
+              ">
+              <td>{{ spending.name }}</td>
+              <td>{{ spending.date }}</td>
+              <td>{{ spending.card }}</td>
+              <td>{{ spending.value  | currency}}</td>
+              <td>
+                <img *ngIf="spending.checked" src='/assets/img/checked.png' height="34px" />
+                <button *ngIf="!spending.checked" cButton color="info" routerLink="/views/spending-check-month-select/{{spending.id}}"><svg cIcon name="cilMagnifyingGlass" cTextColor="white"
+                  size="lg" ></svg></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ng-template #noResults>
+          <p>No results found for "{{ listItens.searchText }}".</p>
+        </ng-template>
+      </c-col>
+    </c-row>
+  </c-card-body>
+</c-card>
