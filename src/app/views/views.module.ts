@@ -31,6 +31,7 @@ import { WidgetsModule } from './widgets/widgets.module';
 import { SetupComponent } from './setup/setup.component';
 import { SpendingsComponent } from './spendings/spendings.component';
 import { SpendingService } from './spending.service';
+import { SpendingCheckMonthService } from './spending.check.month.service';
 import { CategoryService } from './category.service';
 import { BudgetService } from './budget.service';
 import { RevenueService } from './revenue.service';
@@ -115,6 +116,7 @@ registerLocaleData(localePt, 'pt');
     CardService,
     FilterPipe,
     BudgetService,
+    SpendingCheckMonthService,
     {
       provide: LOCALE_ID,
       useValue: 'pt'

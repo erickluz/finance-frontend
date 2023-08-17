@@ -3,6 +3,7 @@ import { ListItens } from '../list.itens';
 import { SpendingCheckMonth } from '../../model/spending.check.month.model';
 import { CreditCardBill } from '../../model/credit.card.bill.model';
 import { CardService } from "../card.service";
+import { SpendingCheckMonthService } from "../spending.check.month.service";
 import { FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
 import { Card } from "../../model/card.modal";
 import { HttpErrorResponse } from '@angular/common/http';
@@ -30,15 +31,14 @@ export class SpendingCheckComponent {
   private file : any;
   public static allCards : Card[];
   public visibleModalUpload = false;
-  spendingsCheckMonth : SpendingCheckMonth[] = [
-    new SpendingCheckMonth("1", "July",  true),
-    new SpendingCheckMonth("1", "August",  false)
-  ]
+  spendingsCheckMonth : SpendingCheckMonth[] = [];
 
-  constructor(private cardService: CardService, private formBuilder: FormBuilder,) {
-      this.listItens.list = this.spendingsCheckMonth;
+  constructor(private cardService: CardService,
+              private spendingCheckMonthService: SpendingCheckMonthService,
+              private formBuilder: FormBuilder
+              ) {
+      this.getSpendingsCheckMonth();
       this.getCards();
-      // let creditCardBill : CreditCardBill = new CreditCardBill(null, formatDate(Date.now(),'dd/MM/yyyy','pt-BR'), null, null)
       this.formCreditCardBill = this.formBuilder.group({
         id: [''],
         dueDate: [formatDate(Date.now(),'dd/MM/yyyy','pt-BR')],
@@ -54,6 +54,20 @@ export class SpendingCheckComponent {
 
   get f(){
     return this.formFile.controls;
+  }
+
+  getSpendingsCheckMonth() {
+    this.spendingCheckMonthService.get()
+      .subscribe({
+        next: this.handleSpendingCheckMonthResponse.bind(this),
+        error: this.handleError.bind(this)
+     });
+  }
+
+  handleSpendingCheckMonthResponse(spendingsCheckMonth: SpendingCheckMonth[]) {
+    this.spendingsCheckMonth = spendingsCheckMonth;
+    this.listItens.list = this.spendingsCheckMonth;
+    console.log(spendingsCheckMonth)
   }
 
   onFileChange(event?: Event) {
