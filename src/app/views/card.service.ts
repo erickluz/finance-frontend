@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Card } from '../model/card.modal';
+import { CreditCardBill } from '../model/credit.card.bill.model';
 import { Globals } from '../globals'
 
 @Injectable()
@@ -22,6 +23,14 @@ export class CardService {
 
   public post(spending: Card) {
     return this.http.post<Card>(this.getUrl(), spending, this.requestOptions)
+  }
+
+  public postFile(file: any) {
+    return this.http.post(this.getUrl() + 'upload', file)
+  }
+
+  public postCreditCardBill(creditCardBill:CreditCardBill) {
+    return this.http.post(this.getUrl() + 'creditCardBill', creditCardBill, this.requestOptions)
   }
 
   public get() : Observable<Card[]> {

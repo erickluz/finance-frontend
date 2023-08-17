@@ -1,4 +1,4 @@
-export class SpendingCard {
+export class CreditCardSpending {
   id : string
   description : string
   date: string

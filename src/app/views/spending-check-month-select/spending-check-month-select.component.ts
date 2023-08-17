@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SpendingService } from "../spending.service";
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ListItens } from '../list.itens';
-import { SpendingCard } from '../../model/spending.card.model'
+import { CreditCardSpending } from '../../model/credit.card.spending'
 
 @Component({
   selector: 'app-spending-check-month-select',
@@ -14,7 +14,7 @@ export class SpendingCheckMonthSelectComponent {
   spending : any
   formSpending : FormGroup;
   listItens : ListItens = new ListItens();
-  spendingsCard : SpendingCard[] = [new SpendingCard('1', 'Feijoada', '19/04/1995', 200, 'A Vista')];
+  spendingsCard : CreditCardSpending[] = [new CreditCardSpending('1', 'Feijoada', '19/04/1995', 200, 'A Vista')];
 
   constructor(private spendingService: SpendingService,
               private activatedRoute: ActivatedRoute,
