@@ -59,7 +59,7 @@
           <option *ngFor="let color of colors" value="{{color.color}}">{{color.color}}</option>
         </select>
       </c-col>
-      <c-col [md]="6">
+      <c-col [md]="12">
         <label cLabel for="inputType">Type</label>
         <select aria-label="Default select example" cSelect id="inputType" formControlName="type">
           <option value="">Type</option>
@@ -69,6 +69,10 @@
       <c-col [md]="6">
         <input cFormCheckInput id="inputIsBudget" type="checkbox" formControlName="isBudget"/>
         <label cFormCheckLabel for="inputIsBudget">Is Budget</label>
+      </c-col>
+      <c-col [md]="6">
+        <input cFormCheckInput id="inputIsBudget" type="checkbox" formControlName="isChkByFile"/>
+        <label cFormCheckLabel for="inputIsBudget">Is Checked by File</label>
       </c-col>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <button (click)="toggleModal()" cButton type="submit">Save</button>

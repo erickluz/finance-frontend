@@ -14,7 +14,7 @@ export class CardsComponent implements OnInit {
   errorMessage: string = '';
   idCardDelete : number = 0;
   cards : Card [] = [];
-  card : Card = new Card("", "", "", "", "", "", true);
+  card : Card = new Card("", "", "", "", "", "", false, true);
   public formCard : FormGroup = this.formBuilder.group({
     id: [this.card.id],
     brand: [this.card.brand],
@@ -22,6 +22,7 @@ export class CardsComponent implements OnInit {
     issuer: [this.card.issuer],
     color: [this.card.color],
     type: [this.card.type],
+    isChkByFile: [this.card.isChkByFile],
     isBudget: [this.card.isBudget]
   });
   public colors = [
@@ -66,6 +67,7 @@ export class CardsComponent implements OnInit {
 
   handleCardResponse(cards: Card[]) {
     this.cards = cards;
+    console.log(cards)
   }
 
   public toggleModalDelete(id: string) {
@@ -84,7 +86,7 @@ export class CardsComponent implements OnInit {
   }
 
   public newCard() {
-    this.card = new Card("", "", "", "", "", "", true);
+    this.card = new Card("", "", "", "", "", "", false, true);
   }
 
   public onSubmit() {
@@ -138,6 +140,7 @@ export class CardsComponent implements OnInit {
       issuer: [card.issuer],
       color: [card.color],
       type: [card.type],
+      isChkByFile: [card.isChkByFile],
       isBudget: [card.isBudget]
     });
   }

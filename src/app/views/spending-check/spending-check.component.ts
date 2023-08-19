@@ -11,6 +11,7 @@ import {formatDate} from '@angular/common';
 import { CustomDateParserFormatter } from '../DateFormatter/CustomDateParserFormatter';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDateAdapter  } from '@ng-bootstrap/ng-bootstrap';
 import { CustomAdapter } from '../DateFormatter/CustomAdapter';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-spending-check',
@@ -52,6 +53,7 @@ export class SpendingCheckComponent {
       });
   }
 
+
   get f(){
     return this.formFile.controls;
   }
@@ -67,7 +69,6 @@ export class SpendingCheckComponent {
   handleSpendingCheckMonthResponse(spendingsCheckMonth: SpendingCheckMonth[]) {
     this.spendingsCheckMonth = spendingsCheckMonth;
     this.listItens.list = this.spendingsCheckMonth;
-    console.log(spendingsCheckMonth)
   }
 
   onFileChange(event?: Event) {
@@ -75,7 +76,6 @@ export class SpendingCheckComponent {
       let element = (event.target as HTMLInputElement)
       if (element && element.files) {
         if (element.files.length > 0) {
-          console.log(element.files.length)
           this.file = element.files[0];
           console.log('File setup')
         }
@@ -88,7 +88,6 @@ export class SpendingCheckComponent {
   }
 
   public uploadFile() {
-    console.log(this.formCreditCardBill.value)
     this.cardService.postCreditCardBill(this.formCreditCardBill.value)
     .subscribe((response) => {
         let formParams = new FormData();

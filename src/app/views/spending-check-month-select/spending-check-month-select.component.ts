@@ -34,19 +34,19 @@ export class SpendingCheckMonthSelectComponent {
 
 
   ngOnInit() {
-    let idSpending = this.activatedRoute.snapshot.params['id'];
-    this.spendingService.findById(idSpending).subscribe(spending => {
-      this.spending = spending;
-      this.formSpending = this.formBuilder.group({
-        id: [spending.id],
-        name: [spending.name],
-        idCategory: [spending.idCategory],
-        idCard: [spending.idCard],
-        date: [spending.date],
-        value: [spending.value],
-        parts: [spending.parts]
-      });
-    })
+    // let idSpending = this.activatedRoute.snapshot.params['id'];
+    // this.spendingService.findById(idSpending).subscribe(spending => {
+    //   this.spending = spending;
+    //   this.formSpending = this.formBuilder.group({
+    //     id: [spending.id],
+    //     name: [spending.name],
+    //     idCategory: [spending.idCategory],
+    //     idCard: [spending.idCard],
+    //     date: [spending.date],
+    //     value: [spending.value],
+    //     parts: [spending.parts]
+    //   });
+    // })
   }
 
   sizeList(list : any[] | undefined) : number {

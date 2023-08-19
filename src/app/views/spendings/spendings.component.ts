@@ -29,7 +29,7 @@ export class SpendingsComponent {
   listItens : ListItens = new ListItens();
   idSpendingDelete : number = 0;
   selectedDate: Datedto = new Datedto("", "", "");
-  selectedCard: Card = new Card("", "", "", "", "", "", false);
+  selectedCard: Card = new Card("", "", "", "", "", "", false, false);
   dates: Datedto[] = [];
   dateVoid: Datedto = new Datedto("", "", "");
   listParts: number [] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]

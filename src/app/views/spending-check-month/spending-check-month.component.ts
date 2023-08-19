@@ -1,10 +1,13 @@
 import { Component,  } from '@angular/core';
 import { ListItens } from '../list.itens';
+import { ItemCheckSpending } from '../../model/item.check.spending.model';
 import { SpendingCheck } from '../../model/spending.check.model';
-import { SpendingService } from "../spending.service";
+import { SpendingCheckMonthService } from "../spending.check.month.service";
 import { ActivatedRoute } from '@angular/router';
 import { Datedto } from 'src/app/model/datedto.model';
-
+import { SpendingCheckAssociation } from '../../model/spending.check.association.model'
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-spending-check-month',
@@ -13,66 +16,56 @@ import { Datedto } from 'src/app/model/datedto.model';
 })
 export class SpendingCheckMonthComponent {
   listItens : ListItens = new ListItens();
+  listItens2 : ListItens = new ListItens();
   dates: Datedto[] = [];
   selectedDate: Datedto = new Datedto("", "", "");
-
-
-  spendingsCheck : SpendingCheck[] = [
-    new SpendingCheck("341", "pastel", "19/04/1995", "XP Investimentos", 200, true),
-    new SpendingCheck("345", "Ração", "19/04/1995", "VR", 60, false)
-  ]
-
-  constructor(private spendingService: SpendingService, private activatedRoute: ActivatedRoute) {
-    this.listItens.list = this.spendingsCheck;
-
-
+  errorMessage: string = '';
+  visible = false;
+  public visibleModalCheck = false;
+  index: any
+  idSpendingCheckMonth : any
+  idSpendingSelected : any
+  actualDate : any
+  formCheck : FormGroup;
+  constructor(private spendingCheckMonthService: SpendingCheckMonthService,
+              private activatedRoute: ActivatedRoute,
+              private formBuilder: FormBuilder) {
+      this.formCheck = this.formBuilder.group({
+        note: [''],
+      });
   }
 
-  // private getDates() {
-  //   this.spendingService.getDates().subscribe(
-  //     (dates) => {
-  //       this.dates = dates;
-  //       if (this.dates && !this.save) {
-  //         for (let datedto of dates) {
-  //           if (datedto.monthNumber == this.getActualMonth()
-  //           && new Date(datedto.date).getFullYear().toString() == new Date().getFullYear().toString()) {
-  //             this.selectedDate = datedto;
-  //           }
-  //         }
-  //         this.getSpendings();
-  //       }
-  //       this.save = false
-  //     }
-  //   );
-  // }
+  ngOnInit() {
+    this.idSpendingCheckMonth = this.activatedRoute.snapshot.params['id'];
+    this.spendingCheckMonthService.findById(this.idSpendingCheckMonth).subscribe(scm => {
+      this.actualDate = scm.date;
+      this.getSpendingCheckAssociations(scm.date);
+    })
+  }
 
-  // private async getSpendings() : Promise<any> {
-  //   if (this.selectedDate.date) {
-  //     this.spendingService.get(this.selectedDate.date)
-  //     .subscribe({
-  //       next: this.handleSpendingResponse.bind(this),
-  //       error: this.handleError.bind(this)
-  //    });
-  //   } else {
-  //     this.spendings = [];
-  //   }
-  // }
+  private getSpendingCheckAssociations(date: string) {
+      this.spendingCheckMonthService.getSpendingCheckAssociations(date)
+      .subscribe({
+        next: this.handleSpendingCheckAssociation.bind(this),
+        error: this.handleError.bind(this)
+     });
+  }
 
-  // handleSpendingResponse(spending: Spending[]) {
-  //   this.spendings = spending;
-  //   this.listItens.list = spending
-  //   this.getCards();
-  //   this.calculateTotal(undefined);
-  // }
+  handleSpendingCheckAssociation(scas: SpendingCheckAssociation[]) {
+    let spendings : ItemCheckSpending[] = [];
+    let creditCardSpendings : ItemCheckSpending[] = [];
+    scas.forEach(sca => {
+      spendings.push(sca.spending)
+      creditCardSpendings.push(sca.creditCardSpending)
+    })
+    this.listItens.list = spendings
+    this.listItens2.list = creditCardSpendings;
+  }
 
-  // private getCategories() {
-  //   this.categorieService.get()
-  //   .subscribe({
-  //     next: this.handleCategoriesResponse.bind(this),
-  //     error: this.handleError.bind(this)
-  //  });
-
-  // }
+  handleError(error: HttpErrorResponse) {
+    this.errorMessage = error.statusText;
+    this.visible = !this.visible;
+  }
 
   sizeList(list : any[] | undefined) : number {
     if (list === undefined) {
@@ -80,5 +73,36 @@ export class SpendingCheckMonthComponent {
     } else {
       return list.length;
     }
+  }
+
+  handleModalCheck(event: any) {
+    this.visibleModalCheck = event;
+  }
+
+  public selectCheckSpending(idSpending: number) {
+    this.idSpendingSelected = idSpending
+    this.toggleModalCheck()
+  }
+
+  public selectToRemoveCheckSpending(idSpending: string) {
+    this.idSpendingSelected = idSpending
+    this.spendingCheckMonthService.removeCheckSpending(idSpending).subscribe(res => {
+      this.getSpendingCheckAssociations(this.actualDate);
+    });
+  }
+
+  public toggleModalCheck() {
+    this.visibleModalCheck = !this.visibleModalCheck;
+  }
+
+  checkSpending() {
+    let note = this.formCheck.controls['note'].value
+    let spendingCheck : SpendingCheck = new SpendingCheck("", this.idSpendingSelected, this.idSpendingCheckMonth, note);
+
+    this.spendingCheckMonthService.checkSpending(spendingCheck).subscribe(resp => {
+      this.getSpendingCheckAssociations(this.actualDate);
+    });
+
+    this.toggleModalCheck();
   }
 }

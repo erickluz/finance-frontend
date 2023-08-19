@@ -50,7 +50,7 @@ export class FilterPipe implements PipeTransform {
 
   private getCardItem(spending : Spending, cards : Card[]) : Card {
     if (!spending.idCard)
-      return new Card("", "", "", "", "", "", true);
+      return new Card("", "", "", "", "", "", false, true);
     else
       return this.ensure<Card>(cards.find(elem => elem.id == spending.idCard));
   }

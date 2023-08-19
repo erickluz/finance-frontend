@@ -3,19 +3,36 @@
     <strong>Spendings  </strong>
   </c-card-header>
   <c-card-body>
+
+
+    <c-row>
+      <c-col lg="8" xs="12"></c-col>
+      <c-col lg="2" xs="12">
+        <div class="d-grid gap-2 d-md-end">
+          <button cButton>Associate</button>
+        </div>
+      </c-col>
+
+      <c-col lg="2" xs="12">
+        <div class="d-grid gap-2 d-md-end">
+          <button cButton>Disassociate</button>
+        </div>
+      </c-col>
+    </c-row>
+    <br/>
     <c-row>
       <c-col lg="6" xs="12">
         <table class="table table-striped table-hover table-responsive" *ngIf="
             sizeList(listItens.list | filter : listItens.searchText) > 0;
             else noResults
-          " responsive cAlign="middle" cTable>
+          " responsive cAlign="middle" title="Spendings" cTable>
           <thead>
             <tr>
+              <th scope="col">Check</th>
               <th scope="col">Name</th>
               <th scope="col">Date</th>
               <th scope="col">Card</th>
               <th scope="col">Value</th>
-              <th scope="col">checked</th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
@@ -23,14 +40,53 @@
                 let spending of listItens.list | filter : listItens.searchText;
                 let i = index
               ">
+              <td>
+                <button *ngIf="!spending.isAssociable && spending.id != null && !spending.checked" cButton color="info" (click)="selectCheckSpending(spending.id)">
+                  <svg cIcon name="cilShareBoxed" cTextColor="white" size="lg"></svg>
+                </button>
+                <button *ngIf="!spending.isAssociable && spending.id != null && spending.checked" cButton color="success" (click)="selectToRemoveCheckSpending(spending.id)">
+                  <svg cIcon name="cilCheck" cTextColor="white" size="lg"></svg>
+                </button>
+                <input *ngIf="spending.isAssociable  && spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
+              </td>
               <td>{{ spending.name }}</td>
               <td>{{ spending.date }}</td>
               <td>{{ spending.card }}</td>
               <td>{{ spending.value  | currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ng-template #noResults>
+          <p>No results found for "{{ listItens.searchText }}".</p>
+        </ng-template>
+      </c-col>
+
+      <c-col lg="6" xs="12">
+        <table class="table table-striped table-hover table-responsive" *ngIf="
+            sizeList(listItens2.list | filter : listItens2.searchText) > 0;
+            else noResults
+          " responsive cAlign="middle" cTable>
+          <thead>
+            <tr>
+              <th scope="col">Value</th>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Card</th>
+              <th scope="col">Check</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="
+                let spending of listItens2.list | filter : listItens2.searchText;
+                let i = index
+              ">
+              <td>{{ spending.value  | currency}}</td>
+              <td>{{ spending.name }}</td>
+              <td>{{ spending.date }}</td>
+              <td>{{ spending.card }}</td>
               <td>
-                <img *ngIf="spending.checked" src='/assets/img/checked.png' height="34px" />
-                <button *ngIf="!spending.checked" cButton color="info" routerLink="/views/spending-check-month-select/{{spending.id}}"><svg cIcon name="cilMagnifyingGlass" cTextColor="white"
-                  size="lg" ></svg></button>
+                <input *ngIf="spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
               </td>
             </tr>
           </tbody>
@@ -43,3 +99,34 @@
     </c-row>
   </c-card-body>
 </c-card>
+
+<c-modal
+  #checkModal
+  alignment="center"
+  id="deleteModal"
+  [visible]="visibleModalCheck"
+  (visibleChange)="handleModalCheck($event)"
+>
+  <c-modal-header>
+    <h5 cModalTitle>Check Spending</h5>
+    <button [cModalToggle]="checkModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form [formGroup]="formCheck" class="row g-4">
+      <c-col [md]="12">
+        <label cLabel for="inputCard4">Observation</label>
+        <input cFormControl type="text" formControlName="note"/>
+      </c-col>
+    </form>
+  </c-modal-body>
+  <c-modal-footer>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button (click)="checkSpending()" cButton>
+        Confirm
+      </button>
+      <button (click)="toggleModalCheck()" cButton color="secondary">
+        Cancel
+      </button>
+    </div>
+  </c-modal-footer>
+</c-modal>

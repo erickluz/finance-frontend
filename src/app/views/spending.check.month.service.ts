@@ -2,6 +2,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SpendingCheckMonth } from '../model/spending.check.month.model'
+import { SpendingCheck } from '../model/spending.check.model'
+import { SpendingCheckAssociation } from '../model/spending.check.association.model'
 import { Datedto } from '../model/datedto.model'
 import { Globals } from '../globals'
 
@@ -39,6 +41,18 @@ export class SpendingCheckMonthService {
 
   public findById(id: number) : Observable<SpendingCheckMonth>  {
     return this.http.get<SpendingCheckMonth>(this.getUrl() + id, this.requestOptions);
+  }
+
+  public getSpendingCheckAssociations(date : string) : Observable<SpendingCheckAssociation[]> {
+    return this.http.get<SpendingCheckAssociation[]>(this.getUrl() + 'associations?date=' + date, this.requestOptions);
+  }
+
+  public checkSpending(spendingCheck: SpendingCheck) {
+    return this.http.post<SpendingCheck>(this.getUrl() + 'check', spendingCheck, this.requestOptions)
+  }
+
+  public removeCheckSpending(idSpending : string) {
+    return this.http.delete(this.getUrl() + 'removeCheck/' + idSpending, this.requestOptions)
   }
 
 }

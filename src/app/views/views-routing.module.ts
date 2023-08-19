@@ -112,19 +112,19 @@ const routes: Routes = [
         },
       },
       {
+        path: 'spending-check-month/:id',
+        component: SpendingCheckMonthComponent,
+        data: {
+          title: 'Spending Check Month',
+        },
+      },
+      {
         path: 'spending-check-month-select',
         component: SpendingCheckMonthSelectComponent,
         data: {
           title: 'Spending Check Month Select',
         },
-      },
-      {
-        path: 'spending-check-month-select/:id',
-        component: SpendingCheckMonthSelectComponent,
-        data: {
-          title: 'Spending Check Month Select',
-        },
-      },
+      }
     ],
   },
 ];
