@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SpendingCheckMonth } from '../model/spending.check.month.model'
 import { SpendingCheck } from '../model/spending.check.model'
 import { SpendingCheckAssociation } from '../model/spending.check.association.model'
+import { AssociationsIDSDTO } from '../model/associations.ids.model';
 import { Datedto } from '../model/datedto.model'
 import { Globals } from '../globals'
 
@@ -54,5 +55,10 @@ export class SpendingCheckMonthService {
   public removeCheckSpending(idSpending : string) {
     return this.http.delete(this.getUrl() + 'removeCheck/' + idSpending, this.requestOptions)
   }
+
+  public associate(ids: AssociationsIDSDTO) {
+    return this.http.post<AssociationsIDSDTO>(this.getUrl() + 'associate', ids, this.requestOptions)
+  }
+
 
 }

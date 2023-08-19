@@ -9,7 +9,7 @@
       <c-col lg="8" xs="12"></c-col>
       <c-col lg="2" xs="12">
         <div class="d-grid gap-2 d-md-end">
-          <button cButton>Associate</button>
+          <button cButton (click)="associar()" >Associate</button>
         </div>
       </c-col>
 
@@ -47,7 +47,7 @@
                 <button *ngIf="!spending.isAssociable && spending.id != null && spending.checked" cButton color="success" (click)="selectToRemoveCheckSpending(spending.id)">
                   <svg cIcon name="cilCheck" cTextColor="white" size="lg"></svg>
                 </button>
-                <input *ngIf="spending.isAssociable  && spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
+                <input (change)="checkSpendingChange($event, i)" [checked]="spendings[i].checked" *ngIf="spending.isAssociable  && spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
               </td>
               <td>{{ spending.name }}</td>
               <td>{{ spending.date }}</td>
@@ -86,7 +86,7 @@
               <td>{{ spending.date }}</td>
               <td>{{ spending.card }}</td>
               <td>
-                <input *ngIf="spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
+                <input (change)="checkCreditCardChange($event, i)" [checked]="creditCardSpendings[i].checked" *ngIf="spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
               </td>
             </tr>
           </tbody>
