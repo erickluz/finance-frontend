@@ -49,7 +49,7 @@
                 </button>
                 <input (change)="checkSpendingChange($event, i)" [checked]="spendings[i].checked" *ngIf="spending.isAssociable  && spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>
               </td>
-              <td>{{ spending.name }}</td>
+              <td>{{ (spending.name == null && spending.id != null) ? 'Grouping' : spending.name}}</td>
               <td>{{ spending.date }}</td>
               <td>{{ spending.card }}</td>
               <td>{{ spending.value  | currency}}</td>
@@ -82,7 +82,7 @@
                 let i = index
               ">
               <td>{{ spending.value  | currency}}</td>
-              <td>{{ spending.name }}</td>
+              <td>{{ (spending.name == null && spending.id != null) ? 'Grouping' : spending.name}}</td>
               <td>{{ spending.date }}</td>
               <td>{{ spending.card }}</td>
               <td>
