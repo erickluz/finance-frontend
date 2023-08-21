@@ -122,6 +122,12 @@ export class SpendingCheckMonthComponent {
     this.creditCardSpendings[i].checked = values.target.checked
   }
 
+  auto() {
+    this.spendingCheckMonthService.auto(this.actualDate).subscribe(res => {
+      this.getSpendingCheckAssociations(this.actualDate);
+    })
+  }
+
   associar() {
     this.associationsIDSDTO = new AssociationsIDSDTO(0, [], []);
     this.associationsIDSDTO.idSpendingCheckMonth = this.idSpendingCheckMonth
