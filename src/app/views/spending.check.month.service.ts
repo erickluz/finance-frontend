@@ -44,8 +44,17 @@ export class SpendingCheckMonthService {
     return this.http.get<SpendingCheckMonth>(this.getUrl() + id, this.requestOptions);
   }
 
-  public getSpendingCheckAssociations(date : string) : Observable<SpendingCheckAssociation[]> {
-    return this.http.get<SpendingCheckAssociation[]>(this.getUrl() + 'associations?date=' + date, this.requestOptions);
+  public getSpendingCheckAssociations(date : string, filterAssociable: string, filterAssociation : string) : Observable<SpendingCheckAssociation[]> {
+    let params : string
+    params = '?date=' + date;
+    if (filterAssociation) {
+      params = params + '&association=' + filterAssociation
+    }
+    if (filterAssociable) {
+      params = params + '&associable=' + filterAssociable
+    }
+    console.log(params)
+    return this.http.get<SpendingCheckAssociation[]>(this.getUrl() + 'associations' + params, this.requestOptions);
   }
 
   public checkSpending(spendingCheck: SpendingCheck) {

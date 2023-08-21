@@ -32,7 +32,10 @@ export class SpendingCheckMonthComponent {
   associationsIDSDTO : AssociationsIDSDTO = new AssociationsIDSDTO(0, [], []);
   spendings : ItemCheckSpending[] = [];
   creditCardSpendings : ItemCheckSpending[] = [];
-
+  optionsFilterAssociation : string [] = ["All", "Associated", "Unassociated"];
+  selectedFilterAssociation : string = "Unassociated";
+  optionsFilterAssociable : string [] = ["All", "Is Associable", "No Associable"];
+  selectedFilterAssociable : string = "Is Associable";
   constructor(private spendingCheckMonthService: SpendingCheckMonthService,
               private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder) {
@@ -50,7 +53,7 @@ export class SpendingCheckMonthComponent {
   }
 
   private getSpendingCheckAssociations(date: string) {
-      this.spendingCheckMonthService.getSpendingCheckAssociations(date)
+      this.spendingCheckMonthService.getSpendingCheckAssociations(date, this.selectedFilterAssociable, this.selectedFilterAssociation)
       .subscribe({
         next: this.handleSpendingCheckAssociation.bind(this),
         error: this.handleError.bind(this)
@@ -164,4 +167,11 @@ export class SpendingCheckMonthComponent {
     })
   }
 
+  changeFilterAssociation() {
+    this.getSpendingCheckAssociations(this.actualDate);
+  }
+
+  changeFilterAssociable() {
+    this.getSpendingCheckAssociations(this.actualDate);
+  }
 }

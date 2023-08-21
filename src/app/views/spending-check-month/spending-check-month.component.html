@@ -6,7 +6,21 @@
 
 
     <c-row>
-      <c-col lg="6" xs="12"></c-col>
+      <c-col lg="2" xs="12">
+        <div class="d-grid gap-2 d-md-block">
+          <select [(ngModel)]="selectedFilterAssociation" cSelect id="inputCardFilter" style="width: 170px;" (change)="changeFilterAssociation()">
+            <option *ngFor="let option of optionsFilterAssociation" [ngValue]="option">{{option}}</option>
+          </select>
+        </div>
+      </c-col>
+      <c-col lg="2" xs="12">
+        <div class="d-grid gap-2 d-md-block">
+          <select [(ngModel)]="selectedFilterAssociable" cSelect id="inputCardFilter" style="width: 170px;" (change)="changeFilterAssociable()">
+            <option *ngFor="let option of optionsFilterAssociable" [ngValue]="option">{{option}}</option>
+          </select>
+        </div>
+      </c-col>
+      <c-col lg="2" xs="12"></c-col>
       <c-col lg="2" xs="12">
       <div class="d-grid gap-2 d-md-end">
         <button cButton (click)="auto()" >Auto</button>
@@ -26,6 +40,7 @@
     </c-row>
     <br/>
     <c-row>
+
       <c-col lg="6" xs="12">
         <table class="table table-striped table-hover table-responsive" *ngIf="
             sizeList(listItens.list | filter : listItens.searchText) > 0;
