@@ -15,7 +15,7 @@
 
       <c-col lg="2" xs="12">
         <div class="d-grid gap-2 d-md-end">
-          <button cButton>Disassociate</button>
+          <button (click)="desassociar()" cButton>Disassociate</button>
         </div>
       </c-col>
     </c-row>
@@ -41,10 +41,10 @@
                 let i = index
               ">
               <td>
-                <button *ngIf="!spending.isAssociable && spending.id != null && !spending.checked" cButton color="info" (click)="selectCheckSpending(spending.id)">
+                <button *ngIf="spending.name != null && !spending.isAssociable && spending.id != null && !spending.checked" cButton color="info" (click)="selectCheckSpending(spending.id)">
                   <svg cIcon name="cilShareBoxed" cTextColor="white" size="lg"></svg>
                 </button>
-                <button *ngIf="!spending.isAssociable && spending.id != null && spending.checked" cButton color="success" (click)="selectToRemoveCheckSpending(spending.id)">
+                <button *ngIf="spending.name != null && !spending.isAssociable && spending.id != null && spending.checked" cButton color="success" (click)="selectToRemoveCheckSpending(spending.id)">
                   <svg cIcon name="cilCheck" cTextColor="white" size="lg"></svg>
                 </button>
                 <input (change)="checkSpendingChange($event, i)" [checked]="spendings[i].checked" *ngIf="spending.isAssociable  && spending.id != null" [checked]="spending.checked" id="check" type="checkbox" class="largerCheckbox"/>

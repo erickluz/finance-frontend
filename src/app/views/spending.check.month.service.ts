@@ -60,5 +60,8 @@ export class SpendingCheckMonthService {
     return this.http.post<AssociationsIDSDTO>(this.getUrl() + 'associate', ids, this.requestOptions)
   }
 
+  public desassociate(ids: AssociationsIDSDTO) {
+    return this.http.post<AssociationsIDSDTO>(this.getUrl() + 'desassociate', ids, this.requestOptions)
+  }
 
 }

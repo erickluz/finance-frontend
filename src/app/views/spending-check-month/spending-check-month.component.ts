@@ -140,4 +140,22 @@ export class SpendingCheckMonthComponent {
     })
   }
 
+  desassociar() {
+    this.associationsIDSDTO = new AssociationsIDSDTO(0, [], []);
+    this.associationsIDSDTO.idSpendingCheckMonth = this.idSpendingCheckMonth
+    this.spendings.forEach (s => {
+      if (s.checked && s.isAssociable){
+        this.associationsIDSDTO.spendingsIds.push(+s.id)
+      }
+    })
+    this.creditCardSpendings.forEach (ccs => {
+      if (ccs.checked && ccs.isAssociable){
+        this.associationsIDSDTO.creditCardIds.push(+ccs.id)
+      }
+    })
+    this.spendingCheckMonthService.desassociate(this.associationsIDSDTO).subscribe(res => {
+      this.getSpendingCheckAssociations(this.actualDate);
+    })
+  }
+
 }
