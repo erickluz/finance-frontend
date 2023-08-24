@@ -38,7 +38,8 @@ export class CardsComponent implements OnInit {
   public typeCards = [
     { id : '1', name : "VR"},
     { id : '2', name : "Débito"},
-    { id : '3', name : "Cŕedito"}
+    { id : '3', name : "Cŕedito"},
+    { id : '4', name : "Empréstimo"}
   ]
   public visibleModalForm = false;
   public visibleModalDelete = false;

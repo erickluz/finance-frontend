@@ -53,7 +53,6 @@ export class SpendingCheckMonthService {
     if (filterAssociable) {
       params = params + '&associable=' + filterAssociable
     }
-    console.log(params)
     return this.http.get<SpendingCheckAssociation[]>(this.getUrl() + 'associations' + params, this.requestOptions);
   }
 
@@ -75,6 +74,14 @@ export class SpendingCheckMonthService {
 
   public auto(date : string) {
     return this.http.post<AssociationsIDSDTO>(this.getUrl() + 'auto', date, this.requestOptions)
+  }
+
+  public justify(ids: AssociationsIDSDTO, note:string) {
+    let param : string = ''
+    if (note) {
+      param = param + '?justification=' + note
+    }
+    return this.http.post<AssociationsIDSDTO>(this.getUrl() + 'justify' + param, ids, this.requestOptions)
   }
 
 }

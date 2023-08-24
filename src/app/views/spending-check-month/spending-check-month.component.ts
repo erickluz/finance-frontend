@@ -24,6 +24,7 @@ export class SpendingCheckMonthComponent {
   errorMessage: string = '';
   visible = false;
   public visibleModalCheck = false;
+  public visibleModalJustify = false;
   index: any
   idSpendingCheckMonth : any
   idSpendingSelected : any
@@ -90,6 +91,10 @@ export class SpendingCheckMonthComponent {
     this.visibleModalCheck = event;
   }
 
+  handleModalJustify(event: any) {
+    this.visibleModalJustify = event;
+  }
+
   public selectCheckSpending(idSpending: number) {
     this.idSpendingSelected = idSpending
     this.toggleModalCheck()
@@ -106,6 +111,27 @@ export class SpendingCheckMonthComponent {
     this.visibleModalCheck = !this.visibleModalCheck;
   }
 
+  goToJustify() {
+    this.formCheck = this.formBuilder.group({
+      note: [''],
+    });
+    let isAlreadyJustified = false
+    for (let ccs of this.creditCardSpendings) {
+      if (ccs.checked && ccs.isJustified){
+        isAlreadyJustified = true
+        this.justify()
+        break
+      }
+    }
+    if (!isAlreadyJustified) {
+      this.toggleModalJustify()
+    }
+  }
+
+  public toggleModalJustify() {
+    this.visibleModalJustify = !this.visibleModalJustify;
+  }
+
   checkSpending() {
     let note = this.formCheck.controls['note'].value
     let spendingCheck : SpendingCheck = new SpendingCheck("", this.idSpendingSelected, this.idSpendingCheckMonth, note);
@@ -115,6 +141,24 @@ export class SpendingCheckMonthComponent {
     });
 
     this.toggleModalCheck();
+  }
+
+  justify() {
+    this.associationsIDSDTO = new AssociationsIDSDTO(0, [], []);
+    let justify = this.formCheck.controls['note'].value
+    this.spendings.forEach (s => {
+      if (s.checked && s.isAssociable){
+        this.associationsIDSDTO.spendingsIds.push(+s.id)
+      }
+    })
+    this.creditCardSpendings.forEach (ccs => {
+      if (ccs.checked && ccs.isAssociable){
+        this.associationsIDSDTO.creditCardIds.push(+ccs.id)
+      }
+    })
+    this.spendingCheckMonthService.justify(this.associationsIDSDTO, justify).subscribe(res => {
+      this.getSpendingCheckAssociations(this.actualDate);
+    })
   }
 
   checkSpendingChange(values:any, i : number):void {
@@ -173,5 +217,12 @@ export class SpendingCheckMonthComponent {
 
   changeFilterAssociable() {
     this.getSpendingCheckAssociations(this.actualDate);
+  }
+  styleTextJustified(isJustified : boolean) {
+    if (isJustified) {
+      return "text-decoration: line-through;"
+    } else {
+      return ""
+    }
   }
 }

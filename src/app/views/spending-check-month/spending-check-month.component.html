@@ -1,10 +1,24 @@
+<div class="mb-12">
+<c-row>
+  <c-col lg="10" xs="12"></c-col>
+  <c-col lg="2" xs="12">
+    <div class="d-grid gap-2 d-md-end">
+      <button
+        cButton
+        color="info"
+        routerLink="/views/spending-check">
+        Voltar
+      </button>
+    </div>
+  </c-col>
+</c-row>
+</div>
+<br/>
 <c-card class="mb-12">
   <c-card-header>
     <strong>Spendings  </strong>
   </c-card-header>
   <c-card-body>
-
-
     <c-row>
       <c-col lg="2" xs="12">
         <div class="d-grid gap-2 d-md-block">
@@ -20,7 +34,11 @@
           </select>
         </div>
       </c-col>
-      <c-col lg="2" xs="12"></c-col>
+      <c-col lg="2" xs="12">
+        <div class="d-grid gap-2 d-md-end">
+          <button cButton (click)="goToJustify()" >Justify</button>
+        </div>
+      </c-col>
       <c-col lg="2" xs="12">
       <div class="d-grid gap-2 d-md-end">
         <button cButton (click)="auto()" >Auto</button>
@@ -102,7 +120,7 @@
                 let i = index
               ">
               <td>{{ spending.value  | currency}}</td>
-              <td>{{ (spending.name == null && spending.id != null) ? 'Grouping' : spending.name}}</td>
+              <td [style]="styleTextJustified(spending.isJustified)">{{ (spending.name == null && spending.id != null) ? 'Grouping' : spending.name}}</td>
               <td>{{ spending.date }}</td>
               <td>{{ spending.card }}</td>
               <td>
@@ -145,6 +163,37 @@
         Confirm
       </button>
       <button (click)="toggleModalCheck()" cButton color="secondary">
+        Cancel
+      </button>
+    </div>
+  </c-modal-footer>
+</c-modal>
+
+<c-modal
+  #justifyModal
+  alignment="center"
+  id="justifyModal"
+  [visible]="visibleModalJustify"
+  (visibleChange)="handleModalJustify($event)"
+>
+  <c-modal-header>
+    <h5 cModalTitle>Justify</h5>
+    <button [cModalToggle]="justifyModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form [formGroup]="formCheck" class="row g-4">
+      <c-col [md]="12">
+        <label cLabel for="inputCard4">Observation</label>
+        <textarea cFormControl rows="5" cols="40" formControlName="note"></textarea>
+      </c-col>
+    </form>
+  </c-modal-body>
+  <c-modal-footer>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button (click)="justify(); toggleModalJustify();" cButton>
+        Confirm
+      </button>
+      <button (click)="toggleModalJustify()" cButton color="secondary">
         Cancel
       </button>
     </div>
