@@ -68,6 +68,7 @@ export class SpendingCheckComponent {
 
   handleSpendingCheckMonthResponse(spendingsCheckMonth: SpendingCheckMonth[]) {
     this.spendingsCheckMonth = spendingsCheckMonth;
+    console.log(spendingsCheckMonth)
     this.listItens.list = this.spendingsCheckMonth;
   }
 

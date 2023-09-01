@@ -34,12 +34,11 @@
               <td>{{ spending.nameMonth }}</td>
               <td>
                 <img
-                  *ngIf="spending.checked"
+                  *ngIf="spending.isCheck"
                   src="/assets/img/checked.png"
                   width="54px"
                 />
                 <button
-                  *ngIf="!spending.checked"
                   cButton
                   color="info"
                   routerLink="/views/spending-check-month/{{spending.id}}"
